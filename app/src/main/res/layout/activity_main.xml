@@ -4,143 +4,199 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="bottom|center_horizontal"
+    android:id="@+id/relative"
     tools:context=".MainActivity">
 
     <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="25dp"
+        android:paddingVertical="25dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="1" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="1"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="2" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="2"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="3" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="3"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="+" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="+"
+                android:textSize="50sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="4" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="4"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="5" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="5"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="6" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="6"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="-" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="−"
+                android:textSize="50sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
             <Button
                 android:id="@+id/button9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="7" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="7"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="8" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="8"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="9" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="9"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="*" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="×"
+                android:textSize="50sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
 
             <Button
                 android:id="@+id/button13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="C" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="C"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="0" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="0"
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="=" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="="
+                android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:text="/" />
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:text="÷"
+                android:textSize="50sp" />
         </TableRow>
     </TableLayout>
 
