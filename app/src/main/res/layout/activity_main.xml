@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,13 +8,15 @@
     android:gravity="bottom|center_horizontal"
     android:id="@+id/relative"
     tools:context=".MainActivity">
+    style="?android:attr/borderlessButtonStyle"
 
     <TableLayout
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="25dp"
-        android:paddingVertical="25dp">
+        android:paddingHorizontal="10dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="10dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -22,32 +25,35 @@
 
             <Button
                 android:id="@+id/button2"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="1"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="2"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button3"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="3"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
@@ -68,32 +74,35 @@
 
             <Button
                 android:id="@+id/button5"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="4"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button6"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="5"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button7"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="6"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
@@ -114,32 +123,35 @@
 
             <Button
                 android:id="@+id/button9"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="7"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button10"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="8"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
                 android:id="@+id/button11"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="9"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
@@ -170,12 +182,13 @@
 
             <Button
                 android:id="@+id/button14"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
                 android:text="0"
+                android:textColor="@color/white"
                 android:textSize="50sp" />
 
             <Button
