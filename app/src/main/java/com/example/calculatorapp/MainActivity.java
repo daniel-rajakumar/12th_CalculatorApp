@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout.setBackgroundColor(Color.rgb(44,44,44));
         tableLayout.setBackgroundColor(Color.rgb(33,33,33));
 
-        textInputEditText.setText("hello world");
+        textInputEditText.setHintTextColor(Color.WHITE);
+//        textInputEditText.setText("hello world");
     }
 }
