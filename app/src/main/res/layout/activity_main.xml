@@ -49,21 +49,18 @@
 
                 <Button
                     android:id="@+id/button_1"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1" />
 
                 <Button
                     android:id="@+id/button_2"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2" />
 
                 <Button
                     android:id="@+id/button_3"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="3" />
@@ -72,7 +69,6 @@
                     android:id="@+id/button_plus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:text="+" />
             </TableRow>
 
@@ -83,21 +79,18 @@
 
                 <Button
                     android:id="@+id/button_4"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4" />
 
                 <Button
                     android:id="@+id/button_5"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5" />
 
                 <Button
                     android:id="@+id/button_6"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6" />
@@ -106,7 +99,6 @@
                     android:id="@+id/button_minus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:text="−" />
             </TableRow>
 
@@ -117,21 +109,18 @@
 
                 <Button
                     android:id="@+id/button_7"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="7" />
 
                 <Button
                     android:id="@+id/button_8"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8" />
 
                 <Button
                     android:id="@+id/button_9"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="9" />
@@ -140,7 +129,6 @@
                     android:id="@+id/button_multiply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:text="×" />
             </TableRow>
 
@@ -153,12 +141,10 @@
                     android:id="@+id/button_clear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:text="C" />
 
                 <Button
                     android:id="@+id/button_0"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0" />
@@ -167,14 +153,12 @@
                     android:id="@+id/button_equal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:text="=" />
 
                 <Button
                     android:id="@+id/button_division"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_corner"
                     android:text="÷" />
 
             </TableRow>

@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -67,8 +65,11 @@ public class MainActivity extends AppCompatActivity {
             params.weight = 1.0f;
             params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
+
             button.setTextColor(Color.WHITE);
             button.setTextSize(50);
+            button.setBackgroundTintList(null);
+            button.setBackgroundResource(R.drawable.rounded_corner_numbers);
         }
 
         // symbol buttons
@@ -80,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
             params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
-            System.out.println("  => " + i + "id: " + button);
             button.setTextColor(Color.GREEN);
             button.setTextSize(50);
+            button.setBackgroundTintList(null);
+            button.setBackgroundResource(R.drawable.rounded_corner_symbols);
         }
     }
 }
