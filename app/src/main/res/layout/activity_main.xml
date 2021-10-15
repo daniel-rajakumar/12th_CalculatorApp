@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <!DOCTYPE RelativeLayout>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +21,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#3EB489"
+            android:tooltipText="0"
             android:gravity="top">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -29,8 +33,8 @@
                 android:background="#00000000"
                 android:textSize="50sp"
                 android:textColor="#ffffff"
-                android:textColorHint="@color/white"
-                android:hint="output" />
+                android:textColorHint="#ffffff"
+                android:hint="Answer" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
