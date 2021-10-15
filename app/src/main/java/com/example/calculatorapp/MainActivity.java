@@ -16,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.StringTokenizer;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
     RelativeLayout relativeLayout;
     TableLayout tableLayout;
     TextInputEditText textInputEditText;
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setBackgroundTintList(null);
             button.setBackgroundResource(R.drawable.rounded_corner_numbers);
             button.setOnClickListener(this);
+            button.setOnLongClickListener(this);
         }
 
         // symbol buttons
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setBackgroundTintList(null);
             button.setBackgroundResource(R.drawable.rounded_corner_symbols);
             button.setOnClickListener(this);
+            button.setOnLongClickListener(this);
         }
     }
 
@@ -130,13 +132,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_minus:     updateEquation("-", false); break;
             case R.id.button_multiply:  updateEquation("*", false); break;
             case R.id.button_division:  updateEquation("/", false); break;
-            case R.id.button_clear:     updateEquation("0", true); break;
+//            case R.id.button_clear:     updateEquation("0", true); break;
             case R.id.button_equal:     updateEquation(solve(equation), true);
         }
     }
 
     void updateEquation(String str, boolean override){
-        int cursorLocation = 0;
+        int cursorLocation;
 
         if (override){
             cursorLocation = str.length();
@@ -150,11 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        if (equation.length() > 0) {
-            cursorLocation = textInputEditText.getSelectionStart();
-        }
 
-
+        cursorLocation = textInputEditText.getSelectionStart();
         String leftHalf = textInputEditText.getText().toString().substring(0, cursorLocation);
         String rightHalf = textInputEditText.getText().toString().substring(cursorLocation);
 
@@ -223,5 +222,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return sum;
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        System.out.println("long: " + v);
+        return false;
     }
 }
