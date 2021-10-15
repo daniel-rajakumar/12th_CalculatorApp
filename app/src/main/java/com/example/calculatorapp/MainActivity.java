@@ -116,31 +116,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         equation = textInputEditText.getText().toString();
         switch (button.getId()){
-            case R.id.button_0:         equation += '0' ; break;
-            case R.id.button_1:         equation += '1' ; break;
-            case R.id.button_2:         equation += '2' ; break;
-            case R.id.button_3:         equation += '3' ; break;
-            case R.id.button_4:         equation += '4' ; break;
-            case R.id.button_5:         equation += '5' ; break;
-            case R.id.button_6:         equation += '6' ; break;
-            case R.id.button_7:         equation += '7' ; break;
-            case R.id.button_8:         equation += '8' ; break;
-            case R.id.button_9:         equation += '9' ; break;
-            case R.id.button_plus:      equation += '+' ; break;
-            case R.id.button_minus:     equation += '-' ; break;
-            case R.id.button_multiply:  equation += '*' ; break;
-            case R.id.button_division:  equation += '/' ; break;
-            case R.id.button_clear:     equation = ""; break;
-            case R.id.button_equal: {
-                equation = solve(equation);
-                if (Double.parseDouble(equation) % 1 == 0) {
-                    equation = (int)(Double.parseDouble(equation)) + "";
-                }
-                break;
-            }
+            case R.id.button_0:         updateEquation("0", false); break;
+            case R.id.button_1:         updateEquation("1", false); break;
+            case R.id.button_2:         updateEquation("2", false); break;
+            case R.id.button_3:         updateEquation("3", false); break;
+            case R.id.button_4:         updateEquation("4", false); break;
+            case R.id.button_5:         updateEquation("5", false); break;
+            case R.id.button_6:         updateEquation("6", false); break;
+            case R.id.button_7:         updateEquation("7", false); break;
+            case R.id.button_8:         updateEquation("8", false); break;
+            case R.id.button_9:         updateEquation("9", false); break;
+            case R.id.button_plus:      updateEquation("+", false); break;
+            case R.id.button_minus:     updateEquation("-", false); break;
+            case R.id.button_multiply:  updateEquation("*", false); break;
+            case R.id.button_division:  updateEquation("/", false); break;
+            case R.id.button_clear:     updateEquation("0", true); break;
+            case R.id.button_equal:     updateEquation(solve(equation), true);
+        }
+    }
+
+    void updateEquation(String str, boolean override){
+        int cursorLocation = 0;
+
+        if (override){
+            cursorLocation = str.length();
+            textInputEditText.setText(str);
+            textInputEditText.setSelection(cursorLocation);
+            return;
         }
 
-        textInputEditText.setText(equation);
+        if (textInputEditText.getText().toString().equals("0")){
+            textInputEditText.setText("");
+        }
+
+
+        if (equation.length() > 0) {
+            cursorLocation = textInputEditText.getSelectionStart();
+        }
+
+
+        String leftHalf = textInputEditText.getText().toString().substring(0, cursorLocation);
+        String rightHalf = textInputEditText.getText().toString().substring(cursorLocation);
+
+        textInputEditText.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
+        textInputEditText.setSelection(cursorLocation + 1);
     }
 
 
@@ -197,6 +216,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         sum = addAndSub(sum) + "";
+
+
+        if (Double.parseDouble(sum) % 1 == 0) {
+            sum = (int)(Double.parseDouble(sum)) + "";
+        }
 
         return sum;
     }

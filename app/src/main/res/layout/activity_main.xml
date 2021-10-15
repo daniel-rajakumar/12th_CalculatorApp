@@ -18,23 +18,27 @@
         android:gravity="bottom"
         android:orientation="vertical">
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="#3EB489"
             android:tooltipText="0"
+
             android:gravity="top">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:background="#00000000"
-                android:textSize="50sp"
+                android:gravity="right"
+                android:hint="Answer"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:hint="Answer" />
+                android:maxLines="1"
+                android:inputType="text"
+                android:textSize="50sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
