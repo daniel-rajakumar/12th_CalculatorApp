@@ -141,18 +141,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
-
         if (str.equals("c")){
-//            if (textInputEditText.getText().length() < 1) return;
             String text = textInputEditText.getText().toString();
             cursorLocation = textInputEditText.getSelectionStart() - 1;
-            if (text.equals("0")) return;
-
-
-//            System.out.printf("text: [%s][%s][%s]\n", text, cursorLocation, text.length()-1);
-//            if (text.length() - 1 < 0) return;
-//            System.out.printf("text: [%s][%s][%s]\n", text, cursorLocation, text.length()-1);
-            if (cursorLocation < 0) return;
+            if (cursorLocation < 0 || text.equals("0")) return;
             textInputEditText.setText(removeCharAt(text, cursorLocation));
             textInputEditText.setSelection(cursorLocation);
             return;
