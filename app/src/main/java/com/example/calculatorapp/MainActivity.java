@@ -132,13 +132,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_minus:     updateEquation("-", false); break;
             case R.id.button_multiply:  updateEquation("*", false); break;
             case R.id.button_division:  updateEquation("/", false); break;
-//            case R.id.button_clear:     updateEquation("0", true); break;
+            case R.id.button_clear:     updateEquation("c", true); break;
             case R.id.button_equal:     updateEquation(solve(equation), true);
         }
     }
 
     void updateEquation(String str, boolean override){
         int cursorLocation;
+
+        if (str.equals("c")){
+            String text = textInputEditText.getText().toString();
+            cursorLocation = textInputEditText.getSelectionStart() - 1;
+            System.out.printf("cursor: [%s][%s]\n", text, cursorLocation);
+            textInputEditText.setText(removeCharAt(text, cursorLocation));
+            textInputEditText.setSelection(cursorLocation);
+            return;
+        }
 
         if (override){
             cursorLocation = str.length();
@@ -160,6 +169,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
         textInputEditText.setSelection(cursorLocation + 1);
     }
+
+    String removeCharAt(String str, int index){
+        return str.substring(0, index) + str.substring(index + 1);
+    }
+
+    
 
 
     double divAndMult(String str){
@@ -226,7 +241,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onLongClick(View v) {
-        System.out.println("long: " + v);
+        Button button = (Button) v;
+
+        equation = textInputEditText.getText().toString();
+        switch (button.getId()){
+            case R.id.button_clear: {
+                textInputEditText.setText("0");
+                break;
+            }
+
+        }
+
         return false;
     }
 }
