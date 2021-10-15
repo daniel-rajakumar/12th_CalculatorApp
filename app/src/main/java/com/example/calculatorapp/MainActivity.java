@@ -112,12 +112,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    String equation;
     @Override
     public void onClick(View v) {
         Button button = (Button) v;
 
-        equation = textInputEditText.getText().toString();
+        String equation = textInputEditText.getText().toString();
         switch (button.getId()){
             case R.id.button_0:         updateEquation("0", false); break;
             case R.id.button_1:         updateEquation("1", false); break;
@@ -175,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String removeCharAt(String str, int index){
-        if (index < 1) return "0";
         return str.substring(0, index) + str.substring(index + 1);
     }
 
@@ -248,13 +246,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onLongClick(View v) {
         Button button = (Button) v;
 
-        equation = textInputEditText.getText().toString();
         switch (button.getId()){
             case R.id.button_clear: {
                 textInputEditText.setText("0");
-                break;
+                textInputEditText.setSelection("0".length());
             }
-
         }
 
         return false;
