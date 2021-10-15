@@ -131,18 +131,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_multiply:  equation += '*' ; break;
             case R.id.button_division:  equation += '/' ; break;
             case R.id.button_clear:     equation = ""; break;
-            case R.id.button_equal:     equation = solve(equation); break;
-//            case R.id.button_equal:     equation = solve("1*3*4+4/3/4-5+1"); break;
-
+            case R.id.button_equal: {
+                equation = solve(equation);
+                if (Double.parseDouble(equation) % 1 == 0) {
+                    equation = (int)(Double.parseDouble(equation)) + "";
+                }
+                break;
+            }
         }
+
         textInputEditText.setText(equation);
     }
 
 
     double divAndMult(String str){
         double sum;
-        StringTokenizer number = new StringTokenizer(str, "*/");
-        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
+        StringTokenizer number = new StringTokenizer(str, "*/ ");
+        StringTokenizer symbol = new StringTokenizer(str, "1234567890. ");
 
         sum = Double.parseDouble(number.nextToken());
         while (number.hasMoreTokens()){
@@ -158,8 +163,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     double addAndSub(String str){
         double sum;
-        StringTokenizer number = new StringTokenizer(str, "+-");
-        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
+        StringTokenizer number = new StringTokenizer(str, "+- ");
+        StringTokenizer symbol = new StringTokenizer(str, "1234567890. ");
 
         sum = Double.parseDouble(number.nextToken().toString());
         while (number.hasMoreTokens()){
@@ -175,12 +180,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     
 
     String solve(String equation){
-        StringTokenizer number, symbol, group, group_sym;
-        String sum = "";
+        StringTokenizer group, group_sym;
+        String sum;
 
-        group = new StringTokenizer(equation, "-+");
-        StringTokenizer groups = new StringTokenizer(equation, "-+");
-        group_sym = new StringTokenizer(equation, "/*1234567890.");
+        group = new StringTokenizer(equation, "-+ ");
+        StringTokenizer groups = new StringTokenizer(equation, "-+ ");
+        group_sym = new StringTokenizer(equation, "/*1234567890. ");
 
         sum = divAndMult(group.nextToken()) + "";
 
