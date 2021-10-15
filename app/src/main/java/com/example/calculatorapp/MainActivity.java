@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
         // number buttons
         for (int i: numButtons){
             Button button = findViewById(i);
