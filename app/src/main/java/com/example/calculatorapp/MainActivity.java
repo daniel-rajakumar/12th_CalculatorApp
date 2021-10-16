@@ -63,8 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText.setShowSoftInputOnFocus(false);
         textInputEditText.setText(EMPTY_ANSWER);
 
-        relativeLayout.setBackgroundColor(Color.rgb(44,44,44));
-        tableLayout.setBackgroundColor(Color.rgb(33,33,33));
+        relativeLayout.setBackgroundResource(R.drawable.dark_top_background);
+        tableLayout.setBackgroundResource(R.drawable.dark_bottom_background);
+        textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
 
 
 
@@ -105,10 +106,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
-            button.setTextColor(Color.rgb(30,30,30));
+            button.setTextColor(getColor(R.color.dark_symbol_button_foreground));
             button.setTextSize(50);
             button.setBackgroundTintList(null);
-            button.setBackgroundResource(R.drawable.dark_rounded_corner_symbols);
+            button.setBackgroundResource(R.drawable.dark_symbol_button);
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
@@ -272,36 +273,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
-                textInputEditText.setTextColor(getColor(R.color.dark_foreground_2));
-                tableLayout.setBackgroundColor(getColor(R.color.dark_background_1));
-                textInputEditText.setBackgroundColor(getColor(R.color.dark_background_2));
-                relativeLayout.setBackgroundColor(getColor(R.color.dark_background_2));
+                textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
+                tableLayout.setBackgroundResource(R.drawable.dark_bottom_background);
+                textInputEditText.setBackgroundResource(R.drawable.dark_top_background);
+                relativeLayout.setBackgroundResource(R.drawable.dark_top_background);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
-                    button.setTextColor(getColor(R.color.dark_foreground_2));
+                    button.setTextColor(getColor(R.color.dark_number_foreground));
                 }
 
                 for (int i: operationsButtons){
                     Button button = findViewById(i);
-                    button.setBackgroundResource(R.drawable.dark_rounded_corner_symbols);
-                    button.setTextColor(getColor(R.color.dark_foreground_1));
+                    button.setBackgroundResource(R.drawable.dark_symbol_button);
+                    button.setTextColor(getColor(R.color.dark_symbol_button_foreground));
                 }
+
+
             } else {
-                textInputEditText.setTextColor(getColor(R.color.light_foreground_2));
-                tableLayout.setBackgroundColor(getColor(R.color.light_background_1));
-                textInputEditText.setBackgroundColor(getColor(R.color.light_background_2));
-                relativeLayout.setBackgroundColor(getColor(R.color.light_background_2));
+                textInputEditText.setTextColor(getColor(R.color.light_answer_foreground));
+                tableLayout.setBackgroundResource(R.drawable.light_bottom_background);
+                textInputEditText.setBackgroundResource(R.drawable.light_top_background);
+                relativeLayout.setBackgroundResource(R.drawable.light_top_background);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
-                    button.setTextColor(getColor(R.color.light_foreground_2));
+                    button.setTextColor(getColor(R.color.light_number_foreground));
                 }
 
                 for (int i: operationsButtons){
                     Button button = findViewById(i);
-                    button.setBackgroundResource(R.drawable.light_rounded_corner_symbols);
-                    button.setTextColor(getColor(R.color.light_foreground_1));
+                    button.setBackgroundResource(R.drawable.light_symbol_button);
+                    button.setTextColor(getColor(R.color.light_symbol_button_foreground));
                 }
             }
         });
