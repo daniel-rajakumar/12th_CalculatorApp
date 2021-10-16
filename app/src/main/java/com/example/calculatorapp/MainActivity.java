@@ -1,6 +1,7 @@
 package com.example.calculatorapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout relativeLayout;
     TableLayout tableLayout;
     TextInputEditText textInputEditText;
-    int[] numButtons, operationsButtons, speicalButtons;
+    int[] numButtons, operationsButtons, specialButtons;
     final String EMPTY_ANSWER = "NONE";
 
     @SuppressLint("ResourceType")
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 R.id.button_equal
         };
 
-        speicalButtons = new int[]{
+        specialButtons = new int[]{
                 R.id.button_clear,
         };
 
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             TableRow.LayoutParams params = new TableRow.LayoutParams();
             params.weight = 1.0f;
+            button.setLayoutParams(params);
             params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // symbol buttons
-        for (int i: speicalButtons){
+        for (int i: specialButtons){
             Button button = findViewById(i);
 
             TableRow.LayoutParams params = new TableRow.LayoutParams();
@@ -278,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    Switch aSwitch;
+    SwitchCompat aSwitch;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -308,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     button.setTextColor(getColor(R.color.dark_symbol_button_foreground));
                 }
 
-                for (int i: speicalButtons){
+                for (int i: specialButtons){
                     Button button = findViewById(i);
                     button.setBackgroundResource(R.drawable.dark_special_symbol_button);
                     button.setTextColor(getColor(R.color.dark_special_symbol_button_foreground));
@@ -332,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     button.setTextColor(getColor(R.color.light_symbol_button_foreground));
                 }
 
-                for (int i: speicalButtons){
+                for (int i: specialButtons){
                     Button button = findViewById(i);
                     button.setBackgroundResource(R.drawable.light_special_symbol_button);
                     button.setTextColor(getColor(R.color.light_special_symbol_button_foreground));
