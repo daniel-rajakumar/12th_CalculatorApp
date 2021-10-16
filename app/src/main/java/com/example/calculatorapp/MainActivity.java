@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setTextColor(Color.rgb(200, 200, 200));
             button.setTextSize(50);
             button.setBackgroundTintList(null);
-            button.setBackgroundResource(R.drawable.rounded_corner_numbers);
+            button.setBackgroundResource(R.drawable.dark_number_button);
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
