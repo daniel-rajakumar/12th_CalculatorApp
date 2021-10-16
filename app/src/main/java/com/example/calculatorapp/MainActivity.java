@@ -7,10 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TableLayout;
@@ -110,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setTextColor(Color.rgb(30,30,30));
             button.setTextSize(50);
             button.setBackgroundTintList(null);
-            button.setBackgroundResource(R.drawable.rounded_corner_symbols);
+            button.setBackgroundResource(R.drawable.dark_rounded_corner_symbols);
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
@@ -274,24 +272,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
-                textInputEditText.setTextColor(Color.WHITE);
-                tableLayout.setBackgroundColor(Color.BLACK);
-                textInputEditText.setBackgroundColor(Color.DKGRAY);
-                relativeLayout.setBackgroundColor(Color.DKGRAY);
+                textInputEditText.setTextColor(getColor(R.color.dark_foreground_2));
+                tableLayout.setBackgroundColor(getColor(R.color.dark_background_1));
+                textInputEditText.setBackgroundColor(getColor(R.color.dark_background_2));
+                relativeLayout.setBackgroundColor(getColor(R.color.dark_background_2));
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
-                    button.setTextColor(Color.WHITE);
+                    button.setTextColor(getColor(R.color.dark_foreground_2));
+                }
+
+                for (int i: operationsButtons){
+                    Button button = findViewById(i);
+                    button.setBackgroundResource(R.drawable.dark_rounded_corner_symbols);
+                    button.setTextColor(getColor(R.color.dark_foreground_1));
                 }
             } else {
-                textInputEditText.setTextColor(Color.BLACK);
-                tableLayout.setBackgroundColor(Color.WHITE);
-                textInputEditText.setBackgroundColor(Color.LTGRAY);
-                relativeLayout.setBackgroundColor(Color.LTGRAY);
+                textInputEditText.setTextColor(getColor(R.color.light_foreground_2));
+                tableLayout.setBackgroundColor(getColor(R.color.light_background_1));
+                textInputEditText.setBackgroundColor(getColor(R.color.light_background_2));
+                relativeLayout.setBackgroundColor(getColor(R.color.light_background_2));
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
-                    button.setTextColor(Color.BLACK);
+                    button.setTextColor(getColor(R.color.light_foreground_2));
+                }
+
+                for (int i: operationsButtons){
+                    Button button = findViewById(i);
+                    button.setBackgroundResource(R.drawable.light_rounded_corner_symbols);
+                    button.setTextColor(getColor(R.color.light_foreground_1));
                 }
             }
         });
