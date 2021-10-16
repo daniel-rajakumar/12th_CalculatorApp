@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TableLayout tableLayout;
     TextInputEditText textInputEditText;
     int[] numButtons, operationsButtons;
-    final String EMPTY_ANSWER = "0";
+    final String EMPTY_ANSWER = "NONE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText = findViewById(R.id.input);
 
         textInputEditText.setShowSoftInputOnFocus(false);
-        textInputEditText.setText("0");
+        textInputEditText.setText(EMPTY_ANSWER);
 
         relativeLayout.setBackgroundColor(Color.rgb(44,44,44));
         tableLayout.setBackgroundColor(Color.rgb(33,33,33));
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (str.equals("c")){
             String text = textInputEditText.getText().toString();
             cursorLocation = textInputEditText.getSelectionStart() - 1;
-            if (cursorLocation < 0 || text.equals("0")) return;
+            if (cursorLocation < 0 || text.equals(EMPTY_ANSWER))  return;
             textInputEditText.setText(removeCharAt(text, cursorLocation));
             textInputEditText.setSelection(cursorLocation);
             return;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (textInputEditText.getText().toString().equals("0")){
+        if (textInputEditText.getText().toString().equals(EMPTY_ANSWER)){
             textInputEditText.setText("");
         }
 
@@ -247,8 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (button.getId()){
             case R.id.button_clear: {
-                textInputEditText.setText("0");
-                textInputEditText.setSelection("0".length());
+                textInputEditText.setText(EMPTY_ANSWER);
+                textInputEditText.setSelection(EMPTY_ANSWER.length());
             }
         }
 
