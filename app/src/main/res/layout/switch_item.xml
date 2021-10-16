@@ -10,18 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:padding="50dp"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="30dp"
         android:layout_gravity="center"
-        app:showText="true"
-        android:textSize="50dp"
+        app:showText="false"
+        android:textOn="DARK"
+        android:textOff="DARK"
+        android:textSize="50sp"
         app:track="@drawable/menu_switch_track"
         android:thumb="@drawable/menu_switch_thumb"/>
-        />
 
 
 </RelativeLayout>

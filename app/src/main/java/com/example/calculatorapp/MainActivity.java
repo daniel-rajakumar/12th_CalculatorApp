@@ -292,6 +292,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                       .getActionView()
                       .findViewById(R.id.theme_switch);
 
+        aSwitch.setBackgroundTintList(null);
+
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
