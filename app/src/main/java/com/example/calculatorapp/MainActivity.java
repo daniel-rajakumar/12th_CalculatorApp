@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout relativeLayout;
     TableLayout tableLayout;
     TextInputEditText textInputEditText;
-    int[] numButtons, operationsButtons;
+    int[] numButtons, operationsButtons, speicalButtons;
     final String EMPTY_ANSWER = "NONE";
 
     @SuppressLint("ResourceType")
@@ -47,10 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 R.id.button_minus,
                 R.id.button_multiply,
                 R.id.button_division,
-                R.id.button_equal,
-                R.id.button_clear
+                R.id.button_equal
         };
 
+        speicalButtons = new int[]{
+                R.id.button_clear,
+        };
 
 
         super.onCreate(savedInstanceState);
@@ -110,6 +112,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setTextSize(50);
             button.setBackgroundTintList(null);
             button.setBackgroundResource(R.drawable.dark_symbol_button);
+            button.setOnClickListener(this);
+            button.setOnLongClickListener(this);
+        }
+
+        // symbol buttons
+        for (int i: speicalButtons){
+            Button button = findViewById(i);
+
+            TableRow.LayoutParams params = new TableRow.LayoutParams();
+            params.weight = 1.0f;
+            params.setMargins(15,15,15,15);
+            button.setLayoutParams(params);
+
+            button.setTextColor(getColor(R.color.dark_special_symbol_button_foreground));
+            button.setTextSize(50);
+            button.setBackgroundTintList(null);
+            button.setBackgroundResource(R.drawable.dark_special_symbol_button);
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
@@ -289,6 +308,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     button.setTextColor(getColor(R.color.dark_symbol_button_foreground));
                 }
 
+                for (int i: speicalButtons){
+                    Button button = findViewById(i);
+                    button.setBackgroundResource(R.drawable.dark_special_symbol_button);
+                    button.setTextColor(getColor(R.color.dark_special_symbol_button_foreground));
+                }
+
 
             } else {
                 textInputEditText.setTextColor(getColor(R.color.light_answer_foreground));
@@ -305,6 +330,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Button button = findViewById(i);
                     button.setBackgroundResource(R.drawable.light_symbol_button);
                     button.setTextColor(getColor(R.color.light_symbol_button_foreground));
+                }
+
+                for (int i: speicalButtons){
+                    Button button = findViewById(i);
+                    button.setBackgroundResource(R.drawable.light_special_symbol_button);
+                    button.setTextColor(getColor(R.color.light_special_symbol_button_foreground));
                 }
             }
         });
