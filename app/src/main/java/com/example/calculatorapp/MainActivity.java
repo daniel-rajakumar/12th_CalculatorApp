@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -20,14 +22,18 @@ import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
     RelativeLayout relativeLayout;
-    TableLayout tableLayout;
+    TableLayout tableLayout_buttons, tableLayout_history;
     TextInputEditText textInputEditText;
+
     int[] numButtons, operationsButtons, specialButtons;
+    int[][] history;
     final String EMPTY_ANSWER = "NONE";
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         numButtons = new int[]{
                 R.id.button_0,
@@ -51,36 +57,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
         specialButtons = new int[]{
-                R.id.button_clear,
+                R.id.button_clear
+        };
+
+        history = new int[][] {
+                {R.id.history_1, R.id.history_answer_1},
+                {R.id.history_2, R.id.history_answer_2},
+                {R.id.history_3, R.id.history_answer_3},
+                {R.id.history_4, R.id.history_answer_4},
+                {R.id.history_5, R.id.history_answer_5},
         };
 
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
 
         relativeLayout = findViewById(R.id.relative);
-        tableLayout = findViewById(R.id.table);
+        tableLayout_buttons = findViewById(R.id.table_button);
+        tableLayout_history = findViewById(R.id.table_history);
         textInputEditText = findViewById(R.id.input);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         textInputEditText.setShowSoftInputOnFocus(false);
         textInputEditText.setText(EMPTY_ANSWER);
 
         relativeLayout.setBackgroundResource(R.drawable.dark_top_background);
-        tableLayout.setBackgroundResource(R.drawable.dark_bottom_background);
+        tableLayout_history.setBackgroundResource(R.drawable.dark_top_background);
+        tableLayout_buttons.setBackgroundResource(R.drawable.dark_bottom_background);
         textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // number buttons
         for (int i: numButtons){
@@ -132,6 +149,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setBackgroundResource(R.drawable.dark_special_symbol_button);
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
+        }
+
+
+        for (int i = 0; i < history.length; i++){
+            for (int j = 0; j < history[i].length; j++){
+                TextView textview = findViewById(history[i][j]);
+                textview.setTextSize(20);
+
+                TableRow.LayoutParams params = new TableRow.LayoutParams();
+                params.weight = 1.0f;
+                textview.setLayoutParams(params);
+
+                if (j == 1){
+                    textview.setGravity(Gravity.RIGHT);
+                    textview.setTextColor(getColor(R.color.dark_history_answer_foreground));
+                } else {
+                    textview.setGravity(Gravity.LEFT);
+                    textview.setTextColor(getColor(R.color.dark_history_foreground));
+                }
+            }
         }
     }
 
@@ -240,29 +277,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String solve(String equation){
         StringTokenizer group, group_sym;
-        String sum;
+        StringBuilder sum;
 
         group = new StringTokenizer(equation, "-+ ");
         StringTokenizer groups = new StringTokenizer(equation, "-+ ");
         group_sym = new StringTokenizer(equation, "/*1234567890. ");
 
-        sum = divAndMult(group.nextToken()) + "";
+        sum = new StringBuilder(divAndMult(group.nextToken()) + "");
 
         while (group.hasMoreTokens()) {
             String gro = group_sym.nextToken();
-            if (gro.equals("+")) sum += "+";
-            if (gro.equals("-")) sum += "-";
-            sum += divAndMult(group.nextToken());
+            if (gro.equals("+")) sum.append("+");
+            if (gro.equals("-")) sum.append("-");
+            sum.append(divAndMult(group.nextToken()));
         }
 
-        sum = addAndSub(sum) + "";
+        sum = new StringBuilder(addAndSub(sum.toString()) + "");
 
 
-        if (Double.parseDouble(sum) % 1 == 0) {
-            sum = (int)(Double.parseDouble(sum)) + "";
+        if (Double.parseDouble(sum.toString()) % 1 == 0) {
+            sum = new StringBuilder((int) (Double.parseDouble(sum.toString())) + "");
         }
 
-        return sum;
+        return sum.toString();
     }
 
     @Override
@@ -293,10 +330,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         aSwitch.setBackgroundTintList(null);
 
+        aSwitch.toggle();
+
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
-                tableLayout.setBackgroundResource(R.drawable.dark_bottom_background);
+                tableLayout_buttons.setBackgroundResource(R.drawable.dark_bottom_background);
                 textInputEditText.setBackgroundResource(R.drawable.dark_top_background);
                 relativeLayout.setBackgroundResource(R.drawable.dark_top_background);
 
@@ -320,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             } else {
                 textInputEditText.setTextColor(getColor(R.color.light_answer_foreground));
-                tableLayout.setBackgroundResource(R.drawable.light_bottom_background);
+                tableLayout_buttons.setBackgroundResource(R.drawable.light_bottom_background);
                 textInputEditText.setBackgroundResource(R.drawable.light_top_background);
                 relativeLayout.setBackgroundResource(R.drawable.light_top_background);
 

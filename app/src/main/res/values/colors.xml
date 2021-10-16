@@ -13,19 +13,27 @@
     <color name="dark_symbol_button_foreground">#18D4A3</color>
     <color name="dark_special_symbol_button_background">#18D4A3</color>
     <color name="dark_special_symbol_button_foreground">#212B41</color>
+    <color name="dark_background_top">#2E3951</color>
+    <color name="dark_background_middle">#212B41</color>
     <color name="dark_background_bottom">#2E3951</color>
-    <color name="dark_background_top">#212B41</color>
     <color name="dark_answer_foreground">#18D4A3</color>
     <color name="dark_number_foreground">#96A8A0</color>
+<!--    <color name="dark_history_foreground">#373E47</color>-->
+<!--    <color name="dark_history_answer_foreground">#18D4A3</color>-->
+    <color name="dark_history_answer_foreground">#373E47</color>
+    <color name="dark_history_foreground">#18D4A3</color>
 
     <color name="light_symbol_button_background">#F4FDFB</color>
     <color name="light_symbol_button_foreground">#18D4A3</color>
     <color name="light_special_symbol_button_background">#18D4A3</color>
     <color name="light_special_symbol_button_foreground">#FFFFFF</color>
+    <color name="light_background_top">#2E3951</color>
+    <color name="light_background_middle">#F4FDFB</color>
     <color name="light_background_bottom">#FFFFFF</color>
-    <color name="light_background_top">#F4FDFB</color>
     <color name="light_answer_foreground">#373E47</color>
     <color name="light_number_foreground">#373E47</color>
+    <color name="light_history_answer_foreground">#373E47</color>
+    <color name="light_history_foreground">#18D4A3</color>
 
 
 
