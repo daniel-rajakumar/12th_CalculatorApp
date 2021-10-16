@@ -94,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText.setShowSoftInputOnFocus(false);
         textInputEditText.setText(EMPTY_ANSWER);
 
-        relativeLayout.setBackgroundResource(R.drawable.dark_top_background);
-        tableLayout_history.setBackgroundResource(R.drawable.dark_top_background);
-        tableLayout_buttons.setBackgroundResource(R.drawable.dark_bottom_background);
+        tableLayout_history.setBackgroundResource(R.drawable.dark_background_top);
+        relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
+        tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
         textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
 
         // number buttons
@@ -335,9 +335,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
-                tableLayout_buttons.setBackgroundResource(R.drawable.dark_bottom_background);
-                textInputEditText.setBackgroundResource(R.drawable.dark_top_background);
-                relativeLayout.setBackgroundResource(R.drawable.dark_top_background);
+                tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
+                textInputEditText.setBackgroundResource(R.drawable.dark_background_top);
+                relativeLayout.setBackgroundResource(R.drawable.dark_background_top);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
@@ -359,9 +359,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             } else {
                 textInputEditText.setTextColor(getColor(R.color.light_answer_foreground));
-                tableLayout_buttons.setBackgroundResource(R.drawable.light_bottom_background);
-                textInputEditText.setBackgroundResource(R.drawable.light_top_background);
-                relativeLayout.setBackgroundResource(R.drawable.light_top_background);
+                tableLayout_buttons.setBackgroundResource(R.drawable.light_background_bottom);
+                textInputEditText.setBackgroundResource(R.drawable.light_background_top);
+                relativeLayout.setBackgroundResource(R.drawable.light_background_top);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
