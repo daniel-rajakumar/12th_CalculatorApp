@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -16,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.StringTokenizer;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
     RelativeLayout relativeLayout;
     TableLayout tableLayout;
     TextInputEditText textInputEditText;
@@ -253,5 +255,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return false;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.nightmode, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
