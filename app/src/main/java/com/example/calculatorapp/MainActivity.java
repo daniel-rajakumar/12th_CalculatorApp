@@ -2,15 +2,17 @@ package com.example.calculatorapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.method.KeyListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
@@ -25,8 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int[] numButtons, operationsButtons;
     final String EMPTY_ANSWER = "NONE";
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         numButtons = new int[]{
                 R.id.button_0,
                 R.id.button_1,
@@ -63,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         relativeLayout.setBackgroundColor(Color.rgb(44,44,44));
         tableLayout.setBackgroundColor(Color.rgb(33,33,33));
-
 
 
 
@@ -257,11 +260,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
+    Switch aSwitch;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.nightmode, menu);
+
+        aSwitch = menu.findItem(R.id.app_bar_switch)
+                      .setActionView(R.layout.switch_item)
+                      .getActionView()
+                      .findViewById(R.id.theme_switch);
+
+        aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                textInputEditText.setTextColor(Color.WHITE);
+                tableLayout.setBackgroundColor(Color.BLACK);
+                textInputEditText.setBackgroundColor(Color.DKGRAY);
+                relativeLayout.setBackgroundColor(Color.DKGRAY);
+
+                for (int i: numButtons) {
+                    Button button = findViewById(i);
+                    button.setTextColor(Color.WHITE);
+                }
+            } else {
+                textInputEditText.setTextColor(Color.BLACK);
+                tableLayout.setBackgroundColor(Color.WHITE);
+                textInputEditText.setBackgroundColor(Color.LTGRAY);
+                relativeLayout.setBackgroundColor(Color.LTGRAY);
+
+                for (int i: numButtons) {
+                    Button button = findViewById(i);
+                    button.setTextColor(Color.BLACK);
+                }
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 }
