@@ -192,6 +192,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
+
+        try {
+            String text1 = textInputEditText_question.getText().toString() + str;
+            cursorLocation = textInputEditText_question.getSelectionStart() + 1;
+            System.out.println("cur: " +  text1.substring(0, cursorLocation));
+
+
+//            prevent user from adding multiple symbols in the same time.
+//            switch (str){
+//                case "*": case "+": case "-": case "/":
+//                    switch (text1.charAt(cursorLocation - 2) + ""){
+//                        case "*": case "+": case "-": case "/":
+//                            return;
+//                    }
+//                    switch (text1.charAt(cursorLocation - 1) + ""){
+//                        case "*": case "+": case "-": case "/":
+//                            return;
+//                    }
+//            }
+
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
         // if clear
         if (str.equals("c")){
             String text = textInputEditText_question.getText().toString();
@@ -230,6 +259,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e){
             System.err.println(e);
         }
+
+
+
+
 
     }
 
