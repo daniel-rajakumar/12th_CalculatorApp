@@ -2,7 +2,6 @@ package com.example.calculatorapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.widget.TextViewCompat;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout relativeLayout;
     TableLayout tableLayout_buttons;
     TextInputEditText textInputEditText;
-    TextView textView_history;
+    TextView textView_answer;
 
     int[] numButtons, operationsButtons, specialButtons;
     final String EMPTY_ANSWER = "0";
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText = findViewById(R.id.input);
 
 
-        textView_history = findViewById(R.id.textView_history);
+        textView_answer = findViewById(R.id.textView_history);
 //        textView_history.setBackgroundResource(R.drawable.dark_background_top);
 //        TextViewCompat.setAutoSizeTextTypeWithDefaults(textView_history, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
@@ -84,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText.setShowSoftInputOnFocus(false);
         textInputEditText.setText(EMPTY_ANSWER);
 
-        textView_history.setTextColor(getColor(R.color.dark_history_foreground));
-        textView_history.setTextSize(150);
+        textView_answer.setTextColor(getColor(R.color.dark_answer_foreground));
+        textView_answer.setTextSize(150);
 
         relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
         tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
-        textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
+        textInputEditText.setTextColor(getColor(R.color.dark_question_foreground));
 
         // number buttons
         for (int i: numButtons){
@@ -167,13 +166,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_multiply:  updateEquation("*", false); break;
             case R.id.button_division:  updateEquation("/", false); break;
             case R.id.button_clear:     updateEquation("c", true); break;
-            case R.id.button_equal:     updateEquation(solve(equation), true);
+            case R.id.button_equal:     updateEquation(solve(textInputEditText.getText().toString()), true);
         }
     }
 
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
+        // if clear
         if (str.equals("c")){
             String text = textInputEditText.getText().toString();
             cursorLocation = textInputEditText.getSelectionStart() - 1;
@@ -201,7 +201,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String rightHalf = textInputEditText.getText().toString().substring(cursorLocation);
 
         textInputEditText.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
+
         textInputEditText.setSelection(cursorLocation + 1);
+
+
+        try {
+            textView_answer.setText(solve(textInputEditText.getText().toString()));
+
+        } catch (Exception e){
+            System.err.println(e);
+        }
+
     }
 
 
@@ -219,17 +229,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "*/ ");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890. ");
 
-//        System.out.println("sum2: " + (Double.parseDouble("0/0")));
         sum = Double.parseDouble(number.nextToken());
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
             String num = number.nextToken();
 
-            System.out.println("sum2: " + sum);
             if (sym.equals("*")) sum *= Double.parseDouble(num);
-            System.out.println("sum3: " + sum);
             if (sym.equals("/")) sum /= Double.parseDouble(num);
-            System.out.println("sum4: " + sum);
         }
 
         return sum;
@@ -257,11 +263,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer group, group_sym;
         StringBuilder sum;
 
+        System.out.println("equ: " + equation);
         group = new StringTokenizer(equation, "-+ ");
         StringTokenizer groups = new StringTokenizer(equation, "-+ ");
         group_sym = new StringTokenizer(equation, "/*1234567890. ");
-
-        System.out.println("sum1: " + (divAndMult("0/0")));
 
         sum = new StringBuilder(divAndMult(group.nextToken()) + "");
 
@@ -282,9 +287,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 //        equation += " = ";
-        textView_history.setHeight(400);
-        textView_history.setMaxLines(1);
-        textView_history.setText(equation + " =");
+//        textView_answer.setHeight(400);
+//        textView_answer.setMaxLines(1);
+        textView_answer.setText("");
 //        TextViewCompat.setAutoSizeTextTypeWithDefaults(textView_history, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
         return sum.toString();
