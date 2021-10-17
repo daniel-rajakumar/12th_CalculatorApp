@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int cursorLocation;
 
 
+        /*
         try {
             String text1 = textInputEditText_question.getText().toString() + str;
             cursorLocation = textInputEditText_question.getSelectionStart() + 1;
@@ -218,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
+        */
 
 
 
