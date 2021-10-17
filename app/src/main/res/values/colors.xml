@@ -34,7 +34,7 @@
     <color name="light_answer_foreground">#373E47</color>
     <color name="light_number_foreground">#373E47</color>
     <color name="light_history_answer_foreground">#373E47</color>
-    <color name="light_history_foreground">#18D4A3</color>
+    <color name="light_question_foreground">#373E47</color>
 
 
 

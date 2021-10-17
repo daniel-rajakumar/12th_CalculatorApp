@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
     RelativeLayout relativeLayout;
     TableLayout tableLayout_buttons;
-    TextInputEditText textInputEditText;
+    TextInputEditText textInputEditText_question;
     TextView textView_answer;
 
     int[] numButtons, operationsButtons, specialButtons;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         relativeLayout = findViewById(R.id.relative);
         tableLayout_buttons = findViewById(R.id.table_button);
-        textInputEditText = findViewById(R.id.input);
+        textInputEditText_question = findViewById(R.id.input);
 
 
         textView_answer = findViewById(R.id.textView_history);
@@ -80,15 +80,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        textInputEditText.setShowSoftInputOnFocus(false);
-        textInputEditText.setText(EMPTY_ANSWER);
+        textInputEditText_question.setShowSoftInputOnFocus(false);
+        textInputEditText_question.setText(EMPTY_ANSWER);
 
         textView_answer.setTextColor(getColor(R.color.dark_answer_foreground));
         textView_answer.setTextSize(150);
 
         relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
         tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
-        textInputEditText.setTextColor(getColor(R.color.dark_question_foreground));
+        textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
 
         // number buttons
         for (int i: numButtons){
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Button button = (Button) v;
 
-        String equation = textInputEditText.getText().toString();
+        String equation = textInputEditText_question.getText().toString();
         switch (button.getId()){
             case R.id.button_0:         updateEquation("0", false); break;
             case R.id.button_1:         updateEquation("1", false); break;
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_multiply:  updateEquation("*", false); break;
             case R.id.button_division:  updateEquation("/", false); break;
             case R.id.button_clear:     updateEquation("c", true); break;
-            case R.id.button_equal:     updateEquation(solve(textInputEditText.getText().toString()), true);
+            case R.id.button_equal:     updateEquation(solve(textInputEditText_question.getText().toString()), true);
         }
     }
 
@@ -175,38 +175,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // if clear
         if (str.equals("c")){
-            String text = textInputEditText.getText().toString();
-            cursorLocation = textInputEditText.getSelectionStart() - 1;
+            String text = textInputEditText_question.getText().toString();
+            cursorLocation = textInputEditText_question.getSelectionStart() - 1;
             if (cursorLocation < 0 || text.equals(EMPTY_ANSWER))  return;
-            textInputEditText.setText(removeCharAt(text, cursorLocation));
-            textInputEditText.setSelection(cursorLocation);
+            textInputEditText_question.setText(removeCharAt(text, cursorLocation));
+            textInputEditText_question.setSelection(cursorLocation);
             return;
         }
 
         if (override){
             cursorLocation = str.length();
-            textInputEditText.setText(str);
-            textInputEditText.setSelection(cursorLocation);
+            textInputEditText_question.setText(str);
+            textInputEditText_question.setSelection(cursorLocation);
             return;
         }
 
-        if (textInputEditText.getText().toString().equals(EMPTY_ANSWER)){
-            textInputEditText.setText("");
+        if (textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
+            textInputEditText_question.setText("");
         }
 
 
 
-        cursorLocation = textInputEditText.getSelectionStart();
-        String leftHalf = textInputEditText.getText().toString().substring(0, cursorLocation);
-        String rightHalf = textInputEditText.getText().toString().substring(cursorLocation);
+        cursorLocation = textInputEditText_question.getSelectionStart();
+        String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
+        String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
 
-        textInputEditText.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
+        textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
 
-        textInputEditText.setSelection(cursorLocation + 1);
+        textInputEditText_question.setSelection(cursorLocation + 1);
 
 
         try {
-            textView_answer.setText(solve(textInputEditText.getText().toString()));
+            textView_answer.setText(solve(textInputEditText_question.getText().toString()));
 
         } catch (Exception e){
             System.err.println(e);
@@ -301,8 +301,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (button.getId()){
             case R.id.button_clear: {
-                textInputEditText.setText(EMPTY_ANSWER);
-                textInputEditText.setSelection(EMPTY_ANSWER.length());
+                textInputEditText_question.setText(EMPTY_ANSWER);
+                textInputEditText_question.setSelection(EMPTY_ANSWER.length());
             }
         }
 
@@ -327,9 +327,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
-                textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
+                textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
                 tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
-                textInputEditText.setBackgroundResource(R.drawable.dark_background_middle);
+                textInputEditText_question.setBackgroundResource(R.drawable.dark_background_middle);
                 relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
 
                 for (int i: numButtons) {
@@ -351,9 +351,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             } else {
-                textInputEditText.setTextColor(getColor(R.color.light_answer_foreground));
+                textInputEditText_question.setTextColor(getColor(R.color.light_question_foreground));
                 tableLayout_buttons.setBackgroundResource(R.drawable.light_background_bottom);
-                textInputEditText.setBackgroundResource(R.drawable.light_background_middle);
+                textInputEditText_question.setBackgroundResource(R.drawable.light_background_middle);
                 relativeLayout.setBackgroundResource(R.drawable.light_background_middle);
 
                 for (int i: numButtons) {
