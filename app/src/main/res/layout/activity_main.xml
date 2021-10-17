@@ -17,116 +17,17 @@
     android:id="@+id/relative"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textView_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TableLayout
-            android:id="@+id/table_history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/history_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-                <TextView
-                    android:id="@+id/history_answer_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/history_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-                <TextView
-                    android:id="@+id/history_answer_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/history_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-                <TextView
-                    android:id="@+id/history_answer_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/history_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-                <TextView
-                    android:id="@+id/history_answer_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/history_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-
-                <TextView
-                    android:id="@+id/history_answer_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textIsSelectable="true" />
-            </TableRow>
-        </TableLayout>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:textSize="150dp"
+        android:includeFontPadding="false"
+        android:text="100"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -151,7 +52,7 @@
                 android:gravity="right"
                 android:hint="Answer"
                 android:inputType="text"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:textSize="50sp" />

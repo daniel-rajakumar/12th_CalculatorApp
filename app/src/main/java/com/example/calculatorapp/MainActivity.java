@@ -2,11 +2,11 @@ package com.example.calculatorapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.widget.TextViewCompat;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -22,12 +22,14 @@ import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
     RelativeLayout relativeLayout;
-    TableLayout tableLayout_buttons, tableLayout_history;
+    TableLayout tableLayout_buttons;
     TextInputEditText textInputEditText;
+    TextView textView_history;
 
     int[] numButtons, operationsButtons, specialButtons;
-    int[][] history;
-    final String EMPTY_ANSWER = "NONE";
+    final String EMPTY_ANSWER = "0";
+    String history;
+
 
     @SuppressLint("ResourceType")
     @Override
@@ -60,27 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 R.id.button_clear
         };
 
-        history = new int[][] {
-                {R.id.history_1, R.id.history_answer_1},
-                {R.id.history_2, R.id.history_answer_2},
-                {R.id.history_3, R.id.history_answer_3},
-                {R.id.history_4, R.id.history_answer_4},
-                {R.id.history_5, R.id.history_answer_5},
-        };
-
-
-
 
         relativeLayout = findViewById(R.id.relative);
         tableLayout_buttons = findViewById(R.id.table_button);
-        tableLayout_history = findViewById(R.id.table_history);
         textInputEditText = findViewById(R.id.input);
 
 
-
-
-
-
+        textView_history = findViewById(R.id.textView_history);
+//        textView_history.setBackgroundResource(R.drawable.dark_background_top);
+//        TextViewCompat.setAutoSizeTextTypeWithDefaults(textView_history, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
 
 
@@ -94,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText.setShowSoftInputOnFocus(false);
         textInputEditText.setText(EMPTY_ANSWER);
 
-        tableLayout_history.setBackgroundResource(R.drawable.dark_background_top);
+        textView_history.setTextColor(getColor(R.color.dark_history_foreground));
+        textView_history.setTextSize(150);
+
         relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
         tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
         textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
@@ -152,24 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        for (int i = 0; i < history.length; i++){
-            for (int j = 0; j < history[i].length; j++){
-                TextView textview = findViewById(history[i][j]);
-                textview.setTextSize(20);
-
-                TableRow.LayoutParams params = new TableRow.LayoutParams();
-                params.weight = 1.0f;
-                textview.setLayoutParams(params);
-
-                if (j == 1){
-                    textview.setGravity(Gravity.RIGHT);
-                    textview.setTextColor(getColor(R.color.dark_history_answer_foreground));
-                } else {
-                    textview.setGravity(Gravity.LEFT);
-                    textview.setTextColor(getColor(R.color.dark_history_foreground));
-                }
-            }
-        }
     }
 
     @Override
@@ -299,6 +273,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             sum = new StringBuilder((int) (Double.parseDouble(sum.toString())) + "");
         }
 
+
+//        equation += " = ";
+        textView_history.setHeight(400);
+        textView_history.setMaxLines(1);
+        textView_history.setText(equation + " =");
+//        TextViewCompat.setAutoSizeTextTypeWithDefaults(textView_history, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+
         return sum.toString();
     }
 
@@ -336,8 +317,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (isChecked){
                 textInputEditText.setTextColor(getColor(R.color.dark_answer_foreground));
                 tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
-                textInputEditText.setBackgroundResource(R.drawable.dark_background_top);
-                relativeLayout.setBackgroundResource(R.drawable.dark_background_top);
+                textInputEditText.setBackgroundResource(R.drawable.dark_background_middle);
+                relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
@@ -360,8 +341,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 textInputEditText.setTextColor(getColor(R.color.light_answer_foreground));
                 tableLayout_buttons.setBackgroundResource(R.drawable.light_background_bottom);
-                textInputEditText.setBackgroundResource(R.drawable.light_background_top);
-                relativeLayout.setBackgroundResource(R.drawable.light_background_top);
+                textInputEditText.setBackgroundResource(R.drawable.light_background_middle);
+                relativeLayout.setBackgroundResource(R.drawable.light_background_middle);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
