@@ -11,8 +11,10 @@
 
     <color name="dark_symbol_button_background">#212B41</color>
     <color name="dark_symbol_button_foreground">#18D4A3</color>
-    <color name="dark_special_symbol_button_background">#18D4A3</color>
-    <color name="dark_special_symbol_button_foreground">#212B41</color>
+    <color name="dark_special_symbol_button_1_background">#18D4A3</color>
+    <color name="dark_special_symbol_button_1_foreground">#212B41 </color>
+    <color name="dark_special_symbol_button_2_background">#212B41 </color>
+    <color name="dark_special_symbol_button_2_foreground">#E56A4D </color>
     <color name="dark_background_top">#2E3951</color>
     <color name="dark_background_middle">#212B41</color>
     <color name="dark_background_bottom">#2E3951</color>
