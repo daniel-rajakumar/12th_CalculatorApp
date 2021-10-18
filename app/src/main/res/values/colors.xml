@@ -9,62 +9,72 @@
     <color name="white">#FFFFFFFF</color>
 
 
-    <color name="dark_symbol_button_background">#212B41</color>
-    <color name="dark_symbol_button_foreground">#18D4A3</color>
-    <color name="dark_special_symbol_button_1_background">#18D4A3</color>
-    <color name="dark_special_symbol_button_1_foreground">#212B41 </color>
-    <color name="dark_special_symbol_button_2_background">#212B41 </color>
-    <color name="dark_special_symbol_button_2_foreground">#E56A4D </color>
-    <color name="dark_background_top">#2E3951</color>
-    <color name="dark_background_middle">#212B41</color>
-    <color name="dark_background_bottom">#2E3951</color>
-    <color name="dark_question_foreground">#18D4A3</color>
-    <color name="dark_answer_foreground">#96A8A0</color>
-    <color name="dark_number_foreground">#96A8A0</color>
-    <color name="dark_number_onpress_foreground">#18D4A3</color>
-<!--    <color name="dark_history_foreground">#373E47</color>-->
-<!--    <color name="dark_history_answer_foreground">#18D4A3</color>-->
-    <color name="dark_history_answer_foreground">#96A8A0</color>
-    <color name="dark_history_foreground">#18D4A3</color>
+    <color name="primary_green">#18D4A3</color>
+    <color name="primary_orange">#E56A4D</color>
 
-    <color name="light_symbol_button_background">#F4FDFB</color>
-    <color name="light_symbol_button_foreground">#18D4A3</color>
-    <color name="light_special_symbol_button_background">#18D4A3</color>
-    <color name="light_special_symbol_button_foreground">#FFFFFF</color>
-    <color name="light_background_top">#FFFFFF</color>
-    <color name="light_background_middle">#F4FDFB</color>
-    <color name="light_background_bottom">#FFFFFF</color>
-    <color name="light_answer_foreground">#373E47</color>
-    <color name="light_number_foreground">#373E47</color>
-    <color name="light_history_answer_foreground">#373E47</color>
-    <color name="light_question_foreground">#373E47</color>
+    <color name="dark_foreground">#96A8A0</color>
+    <color name="dark_background">#212B41</color>
+    <color name="dark_background_alt">#2E3951</color>
 
 
+    <color name="light_foreground">#373E47</color>
+    <color name="light_background">#FFFFFF</color>
+    <color name="light_background_alt">#F4FDFB</color>
 
 
+    <color name="dark_symbol_button_background">@color/dark_background</color>
+    <color name="dark_symbol_button_foreground">@color/primary_green</color>
+    <color name="dark_special_symbol_button_1_background">@color/primary_green</color>
+    <color name="dark_special_symbol_button_1_foreground">@color/dark_background</color>
+    <color name="dark_special_symbol_button_2_background">@color/dark_background</color>
+    <color name="dark_special_symbol_button_2_foreground">@color/primary_orange</color>
+    <color name="dark_background_top">@color/dark_background</color>
+    <color name="dark_background_middle">@color/dark_background</color>
+    <color name="dark_background_bottom">@color/dark_background_alt</color>
+    <color name="dark_question_foreground">@color/primary_green</color>
+    <color name="dark_answer_foreground">@color/dark_foreground</color>
+    <color name="dark_number_foreground">@color/dark_foreground</color>
+    <color name="dark_number_onpress_foreground">@color/primary_green</color>
 
-
-
-
-
-
-
-
-
+    <color name="light_symbol_button_background">@color/light_background_alt</color>
+    <color name="light_symbol_button_foreground">@color/primary_green</color>
+    <color name="light_special_symbol_button_1_background">@color/primary_green</color>
+    <color name="light_special_symbol_button_1_foreground">@color/light_background_alt</color>
+    <color name="light_special_symbol_button_2_background">@color/light_background_alt</color>
+    <color name="light_special_symbol_button_2_foreground">@color/primary_orange</color>
+    <color name="light_background_top">@color/light_background_alt</color>
+    <color name="light_background_middle">@color/light_background_alt</color>
+    <color name="light_background_bottom">@color/light_background</color>
+    <color name="light_question_foreground">@color/light_foreground</color>
+    <color name="light_answer_foreground">@color/light_foreground</color>
+    <color name="light_number_foreground">@color/light_foreground</color>
+    <color name="light_number_onpress_foreground">@color/primary_green</color>
 
 
 
 
 
 
-    <color name="dark_background_1">#212121</color>
-    <color name="dark_background_2">#2c2c2c</color>
-    <color name="dark_foreground_1">#212121</color>
-    <color name="dark_foreground_2">#c8c8c8</color>
 
-    <color name="light_background_2">#b1b1b1</color>
-    <color name="light_background_1">#9c9c9c</color>
-    <color name="light_foreground_1">#cccccc</color>
-    <color name="light_foreground_2">#2c2c2c</color>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </resources>

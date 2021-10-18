@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -301,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         if (number.countTokens() < 1) return 0;
-        
+
         sum = Double.parseDouble(number.nextToken());
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
@@ -408,9 +407,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
                 textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
-                tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
-                textInputEditText_question.setBackgroundResource(R.drawable.dark_background_middle);
+                textInputEditText_question.setBackgroundResource(R.drawable.dark_background_top);
                 relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
+                tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
@@ -431,15 +430,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for (int i: specialButtons_2){
                     Button button = findViewById(i);
-                    button.setBackgroundResource(R.drawable.dark_special_symbol_1_button);
+                    button.setBackgroundResource(R.drawable.dark_special_symbol_2_button);
                     button.setTextColor(getColor(R.color.dark_special_symbol_button_2_foreground));
                 }
 
             } else {
                 textInputEditText_question.setTextColor(getColor(R.color.light_question_foreground));
-                tableLayout_buttons.setBackgroundResource(R.drawable.light_background_bottom);
-                textInputEditText_question.setBackgroundResource(R.drawable.light_background_middle);
+                textInputEditText_question.setBackgroundResource(R.drawable.light_background_top);
                 relativeLayout.setBackgroundResource(R.drawable.light_background_middle);
+                tableLayout_buttons.setBackgroundResource(R.drawable.light_background_bottom);
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
@@ -455,9 +454,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i: specialButtons_1){
                     Button button = findViewById(i);
                     button.setBackgroundResource(R.drawable.light_special_symbol_button);
-                    button.setTextColor(getColor(R.color.light_special_symbol_button_foreground));
+                    button.setTextColor(getColor(R.color.light_special_symbol_button_1_foreground));
                 }
 
+                for (int i: specialButtons_2){
+                    Button button = findViewById(i);
+                    button.setBackgroundResource(R.drawable.light_special_symbol_2_button);
+                    button.setTextColor(getColor(R.color.light_special_symbol_button_2_foreground));
+                }
 
 
             }
