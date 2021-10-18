@@ -237,7 +237,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
 
         textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
-
         textInputEditText_question.setSelection(cursorLocation + 1);
 
 
@@ -272,8 +271,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
+
         while (symbol.hasMoreTokens()){
             String token = symbol.nextToken().toString();
+
+            if (token.length() > 1)  {
+                textView_answer.setText("ERROR");
+                return false;
+            }
 
             for (int i = 0; i < token.length(); i++){
                 System.out.println("280: " + str);
