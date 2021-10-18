@@ -26,6 +26,7 @@
     <color name="light_background_alt">#F4FDFB</color>
 
 
+    <!-- dark mode -->
     <color name="dark_symbol_button_background">@color/dark_background</color>
     <color name="dark_symbol_button_foreground">@color/primary_green</color>
     <color name="dark_special_symbol_button_1_background">@color/primary_green</color>
@@ -42,6 +43,10 @@
     <color name="dark_number_onpress_foreground">@color/dark_foreground</color>
     <color name="dark_number_onpress_background">@color/dark_background</color>
 
+
+
+
+    <!-- light mode -->
     <color name="light_symbol_button_background">@color/light_background_alt</color>
     <color name="light_symbol_button_foreground">@color/primary_green</color>
     <color name="light_special_symbol_button_1_background">@color/primary_green</color>

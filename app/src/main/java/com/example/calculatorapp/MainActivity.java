@@ -414,7 +414,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
-                    button.setTextColor(getColor(R.color.dark_number_foreground));
                     button.setBackgroundResource(R.drawable.dark_number_button);
                     button.setTextColor(getResources().getColorStateList(R.drawable.dark_number_button));
                 }
@@ -445,7 +444,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for (int i: numButtons) {
                     Button button = findViewById(i);
-                    button.setTextColor(getColor(R.color.light_number_foreground));
                     button.setBackgroundResource(R.drawable.light_number_button);
                     button.setTextColor(getResources().getColorStateList(R.drawable.light_number_button));
                 }
@@ -458,7 +456,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for (int i: specialButtons_1){
                     Button button = findViewById(i);
-                    button.setBackgroundResource(R.drawable.light_special_symbol_button);
+                    button.setBackgroundResource(R.drawable.light_special_symbol_1_button);
                     button.setTextColor(getColor(R.color.light_special_symbol_button_1_foreground));
                 }
 
