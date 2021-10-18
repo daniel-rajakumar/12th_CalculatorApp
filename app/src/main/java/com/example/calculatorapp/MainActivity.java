@@ -210,7 +210,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String text = textInputEditText_question.getText().toString();
             cursorLocation = textInputEditText_question.getSelectionStart() - 1;
             if (cursorLocation < 0 || text.equals(EMPTY_ANSWER))  return;
-            textInputEditText_question.setText(removeCharAt(text, cursorLocation));
+            text = removeCharAt(text, cursorLocation);
+            textInputEditText_question.setText(text);
             textInputEditText_question.setSelection(cursorLocation);
             textView_answer.setText(solve(text));
             return;
@@ -255,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String removeCharAt(String str, int index){
+        if (str.length() == 1) return EMPTY_ANSWER;
         return str.substring(0, index) + str.substring(index + 1);
     }
 
@@ -319,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer group, group_sym;
         StringBuilder sum;
 
-        if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return "";
+        if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return EMPTY_ANSWER;
 
         group = new StringTokenizer(equation, "-+ ");
         group_sym = new StringTokenizer(equation, "/*1234567890. ");
