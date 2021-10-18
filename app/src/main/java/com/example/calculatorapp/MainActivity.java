@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         textView_answer = findViewById(R.id.textView_history);
-//        textView_history.setBackgroundResource(R.drawable.dark_background_top);
-//        TextViewCompat.setAutoSizeTextTypeWithDefaults(textView_history, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
 
 
@@ -207,15 +205,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
-        String text = textInputEditText_question.getText().toString();
-
-
         // if clear
         if (str.equals("c")){
+            String text = textInputEditText_question.getText().toString();
             cursorLocation = textInputEditText_question.getSelectionStart() - 1;
             if (cursorLocation < 0 || text.equals(EMPTY_ANSWER))  return;
             textInputEditText_question.setText(removeCharAt(text, cursorLocation));
             textInputEditText_question.setSelection(cursorLocation);
+            textView_answer.setText(solve(text));
             return;
         }
 
@@ -241,6 +238,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText_question.setSelection(cursorLocation + 1);
 
 
+        try {
+            textView_answer.setText(solve(textInputEditText_question.getText().toString()));
+
+        } catch (Exception e){
+            System.err.println(e);
+        }
 
 
 
@@ -316,12 +319,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer group, group_sym;
         StringBuilder sum;
 
+        if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return "";
 
-
-        System.out.println("equ: " + equation);
         group = new StringTokenizer(equation, "-+ ");
-        StringTokenizer groups = new StringTokenizer(equation, "-+ ");
         group_sym = new StringTokenizer(equation, "/*1234567890. ");
+
+
 
         sum = new StringBuilder(divAndMult(group.nextToken()) + "");
 
@@ -330,7 +333,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String gro = group_sym.nextToken();
             if (gro.equals("+")) sum.append("+");
             if (gro.equals("-")) sum.append("-");
-            sum.append(divAndMult(group.nextToken()));
+            String test = group.nextToken();
+            sum.append(divAndMult(test));
         }
 
         sum = new StringBuilder(addAndSub(sum.toString()) + "");
@@ -340,12 +344,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             sum = new StringBuilder((int) (Double.parseDouble(sum.toString())) + "");
         }
 
-
-//        equation += " = ";
-//        textView_answer.setHeight(400);
-//        textView_answer.setMaxLines(1);
         textView_answer.setText("");
-//        TextViewCompat.setAutoSizeTextTypeWithDefaults(textView_history, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM);
 
         return sum.toString();
     }
@@ -357,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (button.getId()){
             case R.id.button_clear: {
                 textInputEditText_question.setText(EMPTY_ANSWER);
+                textView_answer.setText(EMPTY_ANSWER);
                 textInputEditText_question.setSelection(EMPTY_ANSWER.length());
             }
         }
