@@ -300,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "*/");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
+        if (number.countTokens() < 1) return 0;
         String num1 = number.nextToken().toString();
         System.out.printf("304: [str: %s, number: %s]\n", str, num1);
         sum = Double.parseDouble(num1);
@@ -316,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     double addAndSub(String str){
         double sum;
-        StringTokenizer number = new StringTokenizer(str, "+- ");
+        StringTokenizer number = new StringTokenizer(str, "+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         String num1 = number.nextToken().toString();
@@ -338,11 +339,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer group, group_sym;
         StringBuilder sum;
 
+
+        System.out.println("sum: " + equation);
         if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return EMPTY_ANSWER;
 
         group = new StringTokenizer(equation, "-+");
         group_sym = new StringTokenizer(equation, "/*1234567890.");
 
+        StringTokenizer group1 = new StringTokenizer(equation, "-+");
+        while (group1.hasMoreTokens()){
+            System.out.println("sum: " + group1.nextToken());
+
+        }
 
 
         sum = new StringBuilder(divAndMult(group.nextToken()) + "");
@@ -356,7 +364,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String test = group.nextToken();
             sum.append(divAndMult(test));
         }
-        System.out.println("sum: " + sum);
 
         sum = new StringBuilder(addAndSub(sum.toString()) + "");
 
