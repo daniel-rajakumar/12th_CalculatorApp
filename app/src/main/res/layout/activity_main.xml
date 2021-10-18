@@ -33,9 +33,8 @@
             android:layout_height="wrap_content"
             android:background="#00000000"
             android:gravity="right"
-            android:hint="Answer"
             android:inputType="text"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="75sp" />
