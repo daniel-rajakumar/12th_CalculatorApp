@@ -301,9 +301,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         if (number.countTokens() < 1) return 0;
-        String num1 = number.nextToken().toString();
-        System.out.printf("304: [str: %s, number: %s]\n", str, num1);
-        sum = Double.parseDouble(num1);
+        
+        sum = Double.parseDouble(number.nextToken());
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
             String num = number.nextToken();
@@ -320,9 +319,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
-        String num1 = number.nextToken().toString();
-//        System.out.printf("number: [str: %s, number: %s]\n", str, num1);
-        sum = Double.parseDouble(num1);
+        sum = Double.parseDouble(number.nextToken());
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
             String num = number.nextToken();
