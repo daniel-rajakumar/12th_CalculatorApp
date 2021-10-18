@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners  android:radius="500000dp"/>
-    <solid android:color="#00000000"></solid>
 
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true"
+        android:color="@color/dark_number_onpress_foreground"   >
+
+        <shape >
+            <corners  android:radius="500000dp"/>
+            <solid android:color="@color/dark_symbol_button_background" />
+        </shape>
+
+    </item> <!-- pressed -->
+
+    <item android:state_focused="true"
+        android:color="#00ff00" >
+
+        <shape >
+            <corners  android:radius="500000dp"/>
+            <solid android:color="#00000000" />
+
+        </shape>
+
+    </item> <!-- focused -->
+
+
+
+
+    <item android:color="@color/dark_number_foreground" >
+
+        <shape >
+            <corners  android:radius="500000dp"/>
+            <solid android:color="#00000000" />
+
+        </shape>
+
+    </item> <!-- focused -->
+
+</selector>
 

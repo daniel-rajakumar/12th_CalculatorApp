@@ -21,6 +21,7 @@
     <color name="dark_question_foreground">#18D4A3</color>
     <color name="dark_answer_foreground">#96A8A0</color>
     <color name="dark_number_foreground">#96A8A0</color>
+    <color name="dark_number_onpress_foreground">#18D4A3</color>
 <!--    <color name="dark_history_foreground">#373E47</color>-->
 <!--    <color name="dark_history_answer_foreground">#18D4A3</color>-->
     <color name="dark_history_answer_foreground">#96A8A0</color>

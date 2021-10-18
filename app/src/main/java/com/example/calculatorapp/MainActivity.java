@@ -102,10 +102,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
-            button.setTextColor(Color.rgb(200, 200, 200));
+
+//            button.setTextColor(Color.rgb(200, 200, 200));
             button.setTextSize(50);
             button.setBackgroundTintList(null);
             button.setBackgroundResource(R.drawable.dark_number_button);
+            button.setTextColor(getResources().getColorStateList(R.drawable.dark_number_button));
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
@@ -205,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
+        Button button = findViewById(R.id.button_0);
 
 
         try {
