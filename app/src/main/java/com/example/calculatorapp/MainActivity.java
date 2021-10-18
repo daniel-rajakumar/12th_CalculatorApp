@@ -390,6 +390,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     SwitchCompat aSwitch;
 
+    @SuppressLint({"ResourceType", "UseCompatLoadingForColorStateLists"})
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -414,6 +415,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i: numButtons) {
                     Button button = findViewById(i);
                     button.setTextColor(getColor(R.color.dark_number_foreground));
+                    button.setBackgroundResource(R.drawable.dark_number_button);
+                    button.setTextColor(getResources().getColorStateList(R.drawable.dark_number_button));
                 }
 
                 for (int i: operationsButtons){
@@ -443,6 +446,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 for (int i: numButtons) {
                     Button button = findViewById(i);
                     button.setTextColor(getColor(R.color.light_number_foreground));
+                    button.setBackgroundResource(R.drawable.light_number_button);
+                    button.setTextColor(getResources().getColorStateList(R.drawable.light_number_button));
                 }
 
                 for (int i: operationsButtons){
