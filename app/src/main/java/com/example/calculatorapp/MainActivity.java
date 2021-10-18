@@ -185,7 +185,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_multiply:  updateEquation("*", false); break;
             case R.id.button_division:  updateEquation("/", false); break;
             case R.id.button_clear:     updateEquation("c", true); break;
-            case R.id.button_equal:     updateEquation(solve(textInputEditText_question.getText().toString()), true);
+            case R.id.button_equal:     {
+                equation = textInputEditText_question.getText().toString();
+                equation  = equation.replaceAll(" ", "");
+
+                if (!isEqualtionValid(equation)) {
+                    textView_answer.setText("ERROR");
+                    return;
+                }
+                if (isEqualtionValid(equation)) {
+                    System.out.println("equals:  yes");
+                    updateEquation(solve(equation), true);
+                }
+
+            }
         }
     }
 
@@ -193,25 +206,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int cursorLocation;
 
 
-        /*
+
         try {
             String text1 = textInputEditText_question.getText().toString() + str;
             cursorLocation = textInputEditText_question.getSelectionStart() + 1;
             System.out.println("cur: " +  text1.substring(0, cursorLocation));
 
+//            isEqualtionValid(text1);
 
-//            prevent user from adding multiple symbols in the same time.
-//            switch (str){
-//                case "*": case "+": case "-": case "/":
-//                    switch (text1.charAt(cursorLocation - 2) + ""){
-//                        case "*": case "+": case "-": case "/":
-//                            return;
-//                    }
-//                    switch (text1.charAt(cursorLocation - 1) + ""){
-//                        case "*": case "+": case "-": case "/":
-//                            return;
-//                    }
-//            }
+
+
+
 
 
 
@@ -219,7 +224,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
 
-        */
 
 
 
@@ -277,6 +281,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     
 
+    boolean isEqualtionValid(String str){
+        double sum;
+        int  count_symbol = 0;
+        StringTokenizer number = new StringTokenizer(str, "*/+- ");
+        StringTokenizer symbol = new StringTokenizer(str, "1234567890. ");
+
+        while (symbol.hasMoreTokens()){
+            String token = symbol.nextToken().toString();
+
+            for (int i = 0; i < token.length(); i++){
+                count_symbol++;
+            }
+        }
+
+
+
+        System.out.printf("valid: number: %s  | symbol: %s\n", number.countTokens(), count_symbol);
+        return number.countTokens() > count_symbol;
+    }
 
     double divAndMult(String str){
         double sum;
@@ -316,6 +339,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String solve(String equation){
         StringTokenizer group, group_sym;
         StringBuilder sum;
+
+
 
         System.out.println("equ: " + equation);
         group = new StringTokenizer(equation, "-+ ");
