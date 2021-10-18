@@ -207,32 +207,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
-        Button button = findViewById(R.id.button_0);
-
-
-        try {
-            String text1 = textInputEditText_question.getText().toString() + str;
-            cursorLocation = textInputEditText_question.getSelectionStart() + 1;
-            System.out.println("cur: " +  text1.substring(0, cursorLocation));
-
-//            isEqualtionValid(text1);
-
-
-
-
-
-
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-
+        String text = textInputEditText_question.getText().toString();
 
 
         // if clear
         if (str.equals("c")){
-            String text = textInputEditText_question.getText().toString();
             cursorLocation = textInputEditText_question.getSelectionStart() - 1;
             if (cursorLocation < 0 || text.equals(EMPTY_ANSWER))  return;
             textInputEditText_question.setText(removeCharAt(text, cursorLocation));
@@ -262,12 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText_question.setSelection(cursorLocation + 1);
 
 
-        try {
-            textView_answer.setText(solve(textInputEditText_question.getText().toString()));
-
-        } catch (Exception e){
-            System.err.println(e);
-        }
 
 
 
