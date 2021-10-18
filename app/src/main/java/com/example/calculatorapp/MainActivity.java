@@ -215,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             textInputEditText_question.setText(text);
             textInputEditText_question.setSelection(cursorLocation);
             textView_answer.setText(solve(text));
+            System.out.println("clear: " + text);
+            isEqualtionValid(text);
             return;
         }
 
@@ -247,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.err.println("in update equ: "  + e);
         }
 
-        isEqualtionValid(textInputEditText_question.getText().toString() + str);
+        isEqualtionValid(textInputEditText_question.getText().toString());
 
 
 
@@ -275,14 +277,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String token = symbol.nextToken().toString();
 
             for (int i = 0; i < token.length(); i++){
+                System.out.println("280: " + str);
                 count_symbol++;
             }
         }
 
-//        System.out.printf("valid: number: %s  | symbol: %s\n", number.countTokens(), count_symbol);
+        System.out.printf("count: number: %s  | symbol: %s\n", number.countTokens(), count_symbol - 2);
 
 
-        if (number.countTokens() <= count_symbol - 2)  textView_answer.setText("ERROR");
+        if (number.countTokens() <= count_symbol - 1)  textView_answer.setText("ERROR");
 
         return number.countTokens() > count_symbol;
     }
@@ -297,7 +300,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "*/");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
-        sum = Double.parseDouble(number.nextToken());
+        String num1 = number.nextToken().toString();
+        System.out.printf("304: [str: %s, number: %s]\n", str, num1);
+        sum = Double.parseDouble(num1);
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
             String num = number.nextToken();
@@ -315,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         String num1 = number.nextToken().toString();
-        System.out.printf("number: [str: %s, number: %s]\n", str, num1);
+//        System.out.printf("number: [str: %s, number: %s]\n", str, num1);
         sum = Double.parseDouble(num1);
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
@@ -345,6 +350,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         while (group.hasMoreTokens()) {
             String gro = group_sym.nextToken();
+            if (gro.length() > 1) return "ERROR";
             if (gro.equals("+")) sum.append("+");
             if (gro.equals("-")) sum.append("-");
             String test = group.nextToken();
