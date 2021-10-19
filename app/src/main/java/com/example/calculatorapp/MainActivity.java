@@ -295,7 +295,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         System.out.printf("count: number: %s  | symbol: %s\n", number.countTokens(), count_symbol - 2);
 
         try {
-            if ((divAndMult(str) + "").equals("NaN"))  textView_answer.setText("ERROR");
+            String unwantedAnswers = divAndMult(str) + "";
+            switch (unwantedAnswers){
+                case "NaN": case "Infinity":
+                    textView_answer.setText("ERROR");
+            }
+
+
         } catch (Exception e){ }
 
 
@@ -387,7 +393,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         try {
-            if ((divAndMult(equation) + "").equals("NaN"))  return equation;
+            String unwantedAnswers = divAndMult(equation) + "";
+            switch (unwantedAnswers){
+                case "NaN": case "Infinity":
+                    return equation;
+            }
         } catch (Exception e){ }
 
         textView_answer.setText("");
