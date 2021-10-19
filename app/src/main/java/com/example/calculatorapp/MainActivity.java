@@ -226,9 +226,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if (textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
-            textInputEditText_question.setText("");
+        for (int i: numButtons) {
+            Button button = findViewById(i);
+            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
+                textInputEditText_question.setText("");
+            }
         }
+
+//        if (textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
+//            textInputEditText_question.setText("");
+//        }
 
 
 
@@ -271,7 +278,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
-
         while (symbol.hasMoreTokens()){
             String token = symbol.nextToken().toString();
 
@@ -287,6 +293,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         System.out.printf("count: number: %s  | symbol: %s\n", number.countTokens(), count_symbol - 2);
+
+
+        if ((divAndMult(str) + "").equals("NaN")) textView_answer.setText("ERROR");
+
 
 
         if (number.countTokens() <= count_symbol - 1)  textView_answer.setText("ERROR");
@@ -315,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("/")) sum /= Double.parseDouble(num);
         }
 
+        System.out.println("sun_1: " + sum);
         return sum;
     }
 
@@ -374,6 +385,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         textView_answer.setText("");
+
+        if ((divAndMult(equation) + "").equals("NaN")) return equation;
 
         return sum.toString();
     }
