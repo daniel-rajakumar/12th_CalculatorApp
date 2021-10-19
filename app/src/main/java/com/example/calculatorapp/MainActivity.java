@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (str.equals("c")){
             String text = textInputEditText_question.getText().toString();
             cursorLocation = textInputEditText_question.getSelectionStart() - 1;
-            if (cursorLocation < 0 || text.equals(EMPTY_ANSWER))  return;
+            if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
             text = removeCharAt(text, cursorLocation);
             textInputEditText_question.setText(text);
             textInputEditText_question.setSelection(cursorLocation);
@@ -300,8 +300,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 case "NaN": case "Infinity":
                     textView_answer.setText("ERROR");
             }
-
-
         } catch (Exception e){ }
 
 
@@ -375,13 +373,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sum = new StringBuilder(divAndMult(group.nextToken()) + "");
 
 
+
         while (group.hasMoreTokens()) {
             String gro = group_sym.nextToken();
             if (gro.length() > 1) return "ERROR";
             if (gro.equals("+")) sum.append("+");
             if (gro.equals("-")) sum.append("-");
             String test = group.nextToken();
-            sum.append(divAndMult(test));
+            double answer = divAndMult(test);
+
+            if ((answer + "").equals("NaN")) return "ERROR";
+            System.out.println("375: " + answer);
+            sum.append(answer);
         }
 
         sum = new StringBuilder(addAndSub(sum.toString()) + "");
