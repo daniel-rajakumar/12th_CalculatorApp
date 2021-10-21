@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_clear:     updateEquation("c", true); break;
             case R.id.button_equal:     {
                 equation = textInputEditText_question.getText().toString();
-                equation  = equation.replaceAll(" ", "");
+                equation  = "0" + equation.replaceAll(" ", "");
 
                 if (!isEqualtionValid(equation)) {
                     textView_answer.setText("ERROR");
@@ -202,8 +202,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void updateEquation(String str, boolean override){
         int cursorLocation;
-
-
 
         // if clear
         if (str.equals("c")){
@@ -226,12 +224,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+
         for (int i: numButtons) {
             Button button = findViewById(i);
             if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
                 textInputEditText_question.setText("");
             }
         }
+
 
 //        if (textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
 //            textInputEditText_question.setText("");
@@ -247,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textInputEditText_question.setSelection(cursorLocation + 1);
 
 
+
         try {
             textView_answer.setText(solve(textInputEditText_question.getText().toString()));
 
@@ -254,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.err.println("in update equ: "  + e);
         }
 
-        isEqualtionValid(textInputEditText_question.getText().toString());
+        isEqualtionValid("0" + textInputEditText_question.getText().toString());
 
 
 
@@ -294,8 +295,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         System.out.printf("count: number: %s  | symbol: %s\n", number.countTokens(), count_symbol - 2);
 
+        System.out.printf("297: %s \n", str);
         try {
             String unwantedAnswers = divAndMult(str) + "";
+            System.out.println("299: " + unwantedAnswers);
             switch (unwantedAnswers){
                 case "NaN": case "Infinity":
                     textView_answer.setText("ERROR");
@@ -315,13 +318,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     double divAndMult(String str){
-        double sum;
+        double sum = 0;
         StringTokenizer number = new StringTokenizer(str, "*/");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         if (number.countTokens() < 1) return 0;
 
-        sum = Double.parseDouble(number.nextToken());
+        if (number.countTokens() != symbol.countTokens())
+            sum = Double.parseDouble(number.nextToken());
+
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
             String num = number.nextToken();
@@ -335,11 +340,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     double addAndSub(String str){
-        double sum;
+        double sum = 0;
+        str = "0" + str;
         StringTokenizer number = new StringTokenizer(str, "+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
+        System.out.println("357: 1)" + str);
         sum = Double.parseDouble(number.nextToken());
+
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
             String num = number.nextToken();
@@ -347,6 +355,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("+")) sum += Double.parseDouble(num);
             if (sym.equals("-")) sum -= Double.parseDouble(num);
         }
+
+        System.out.println("357: 2)" + sum);
 
         return sum;
     }
@@ -356,32 +366,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer group, group_sym;
         StringBuilder sum;
 
-
-        System.out.println("sum: " + equation);
+        equation = "0" + equation;
+        System.out.println("359: " + equation);
         if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return EMPTY_ANSWER;
 
-
-        group_sym = new StringTokenizer(equation, "/*1234567890.");
-        group = new StringTokenizer(equation, "-+");
-
-        while (group_sym.hasMoreTokens()){
-            System.out.println("solve: group_sym: " + group_sym.nextToken());
-        }
-
-        while (group.hasMoreTokens()){
-            System.out.println("solve: group: " + group.nextToken());
-        }
-
-
-
         group = new StringTokenizer(equation, "-+");
         group_sym = new StringTokenizer(equation, "/*1234567890.");
 
-        StringTokenizer group1 = new StringTokenizer(equation, "-+");
-        while (group1.hasMoreTokens()){
-            System.out.println("sum: " + group1.nextToken());
-
-        }
 
 
         sum = new StringBuilder(divAndMult(group.nextToken()) + "");
