@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("/")) sum /= Double.parseDouble(num);
         }
 
-        System.out.println("sun_1: " + sum);
+//        System.out.println("sum_1: " + sum);
         return sum;
     }
 
@@ -359,6 +359,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         System.out.println("sum: " + equation);
         if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return EMPTY_ANSWER;
+
+
+        group_sym = new StringTokenizer(equation, "/*1234567890.");
+        group = new StringTokenizer(equation, "-+");
+
+        while (group_sym.hasMoreTokens()){
+            System.out.println("solve: group_sym: " + group_sym.nextToken());
+        }
+
+        while (group.hasMoreTokens()){
+            System.out.println("solve: group: " + group.nextToken());
+        }
+
+
 
         group = new StringTokenizer(equation, "-+");
         group_sym = new StringTokenizer(equation, "/*1234567890.");
