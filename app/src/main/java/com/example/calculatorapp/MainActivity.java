@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_clear:     updateEquation("c", true); break;
             case R.id.button_equal:     {
                 equation = textInputEditText_question.getText().toString();
-                equation  = "0" + equation.replaceAll(" ", "");
+                equation  = equation.replaceAll(" ", "");
 
                 if (!isEqualtionValid(equation)) {
                     textView_answer.setText("ERROR");
@@ -318,14 +318,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     double divAndMult(String str){
-        double sum = 0;
+        double sum;
         StringTokenizer number = new StringTokenizer(str, "*/");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         if (number.countTokens() < 1) return 0;
 
-        if (number.countTokens() != symbol.countTokens())
-            sum = Double.parseDouble(number.nextToken());
+//        if (number.countTokens() != symbol.countTokens())
+        sum = Double.parseDouble(number.nextToken());
 
         while (number.hasMoreTokens()){
             String sym = symbol.nextToken();
@@ -335,13 +335,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("/")) sum /= Double.parseDouble(num);
         }
 
-//        System.out.println("sum_1: " + sum);
+        System.out.println("sum_1: " + sum);
         return sum;
     }
 
     double addAndSub(String str){
         double sum = 0;
-        str = "0" + str;
+//        str = "0" + str;
         StringTokenizer number = new StringTokenizer(str, "+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
@@ -367,6 +367,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringBuilder sum;
 
         equation = "0" + equation;
+
         System.out.println("359: " + equation);
         if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return EMPTY_ANSWER;
 
@@ -399,12 +400,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             sum = new StringBuilder((int) (Double.parseDouble(sum.toString())) + "");
         }
 
-
         try {
             String unwantedAnswers = divAndMult(equation) + "";
             switch (unwantedAnswers){
                 case "NaN": case "Infinity":
-                    return equation;
+                    return equation.substring(1);
             }
         } catch (Exception e){ }
 
