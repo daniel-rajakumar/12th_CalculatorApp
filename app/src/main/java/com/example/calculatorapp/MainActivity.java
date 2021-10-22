@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 equation  = equation.replaceAll(" ", "");
 
                 if (!isEqualtionValid(equation)) {
-                    textView_answer.setText("ERROR");
+                    textView_answer.setText("ERROR - 192");
                     return;
                 }
                 if (isEqualtionValid(equation)) {
@@ -218,6 +218,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (override){
+            if (str.equals("ERROR")) return;
+            
             cursorLocation = str.length();
             textInputEditText_question.setText(str);
             textInputEditText_question.setSelection(cursorLocation);
@@ -279,11 +281,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
+        System.out.println("282: " + str);
+
         while (symbol.hasMoreTokens()){
             String token = symbol.nextToken().toString();
 
             if (token.length() > 1)  {
-                textView_answer.setText("ERROR");
+                textView_answer.setText("ERROR - 289");
                 return false;
             }
 
@@ -301,13 +305,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("299: " + unwantedAnswers);
             switch (unwantedAnswers){
                 case "NaN": case "Infinity":
-                    textView_answer.setText("ERROR");
+                    textView_answer.setText("ERROR - 307");
             }
         } catch (Exception e){ }
 
 
 
-        if (number.countTokens() <= count_symbol - 1)  textView_answer.setText("ERROR");
+        if (str.charAt(0) == '-') count_symbol--;
+
+        if (!(number.countTokens() >= count_symbol))  textView_answer.setText("ERROR - 215");
 
         return number.countTokens() > count_symbol;
     }
