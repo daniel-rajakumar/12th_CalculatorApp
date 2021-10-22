@@ -16,18 +16,16 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.DecimalFormat;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
-    RelativeLayout relativeLayout;
+    RelativeLayout relativeLayout_main;
     TableLayout tableLayout_buttons;
     TextInputEditText textInputEditText_question;
     TextView textView_answer;
 
     int[] numButtons, operationsButtons, specialButtons_1, specialButtons_2;
     final String EMPTY_ANSWER = "0";
-    String history;
 
 
     @SuppressLint("ResourceType")
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
 
-        relativeLayout = findViewById(R.id.relative);
+        relativeLayout_main = findViewById(R.id.relative);
         tableLayout_buttons = findViewById(R.id.table_button);
         textInputEditText_question = findViewById(R.id.input);
 
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView_answer.setTextColor(getColor(R.color.dark_answer_foreground));
         textView_answer.setTextSize(150);
 
-        relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
+        relativeLayout_main.setBackgroundResource(R.drawable.dark_background_middle);
         tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
         textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
 
@@ -472,7 +470,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (isChecked){
                 textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
                 textInputEditText_question.setBackgroundResource(R.drawable.dark_background_top);
-                relativeLayout.setBackgroundResource(R.drawable.dark_background_middle);
+                relativeLayout_main.setBackgroundResource(R.drawable.dark_background_middle);
                 tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
 
                 for (int i: numButtons) {
@@ -502,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 textInputEditText_question.setTextColor(getColor(R.color.light_question_foreground));
                 textInputEditText_question.setBackgroundResource(R.drawable.light_background_top);
-                relativeLayout.setBackgroundResource(R.drawable.light_background_middle);
+                relativeLayout_main.setBackgroundResource(R.drawable.light_background_middle);
                 tableLayout_buttons.setBackgroundResource(R.drawable.light_background_bottom);
 
                 for (int i: numButtons) {
