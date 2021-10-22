@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (override){
             if (str.equals("ERROR")) return;
-            
+
             cursorLocation = str.length();
             textInputEditText_question.setText(str);
             textInputEditText_question.setSelection(cursorLocation);
