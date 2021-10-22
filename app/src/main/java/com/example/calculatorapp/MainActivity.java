@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DecimalFormat;
 import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnCreateContextMenuListener {
@@ -278,6 +279,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean isEqualtionValid(String str){
         double sum;
         int  count_symbol = 0;
+
+
+
+
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
@@ -341,7 +346,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("/")) sum /= Double.parseDouble(num);
         }
 
+//        sum = Math.round(sum * 10000000.0) / 10000000.0;
         System.out.println("sum_1: " + sum);
+        System.out.println("350: " + String.format("%.0f", sum));
+
+        if ((sum+"").contains("E-")) return 0;
+        if ((sum+"").contains("E")) return Double.MAX_VALUE;
+
         return sum;
     }
 
@@ -364,6 +375,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         System.out.println("357: 2)" + sum);
 
+
+
+
         return sum;
     }
     
@@ -371,6 +385,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String solve(String equation){
         StringTokenizer group, group_sym;
         StringBuilder sum;
+
 
         equation = "0" + equation;
 
