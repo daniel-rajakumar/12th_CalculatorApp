@@ -454,12 +454,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onLongClick(View v) {
         Button button = (Button) v;
 
-        switch (button.getId()){
-            case R.id.button_clear: {
-                textInputEditText_question.setText(EMPTY_ANSWER);
-                textView_answer.setText(EMPTY_ANSWER);
-                textInputEditText_question.setSelection(EMPTY_ANSWER.length());
-            }
+        if (button.getId() == R.id.button_clear) {
+            textInputEditText_question.setText(EMPTY_ANSWER);
+            textView_answer.setText(EMPTY_ANSWER);
+            textInputEditText_question.setSelection(EMPTY_ANSWER.length());
         }
 
         return false;
@@ -485,9 +483,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .getActionView()
                 .findViewById(R.id.theme_switch);
 
-        aSwitch.setBackgroundTintList(null);
-
-
         aSwitch.toggle();
     }
 
@@ -495,54 +490,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSwitchToggle(isChecked));
     }
 
+    @SuppressLint({"ResourceType", "UseCompatLoadingForColorStateLists"})
     void onSwitchToggle(boolean isChecked){
-        textInputEditText_question.setTextColor(getColor(isChecked ? R.color.dark_question_foreground
-                : R.color.light_question_foreground));
-
-        textInputEditText_question.setBackgroundResource(isChecked ? R.drawable.dark_background_top
-                : R.drawable.light_background_top);
-
-        relativeLayout_main.setBackgroundResource(isChecked ? R.drawable.dark_background_middle
-                : R.drawable.light_background_middle);
-
-        tableLayout_buttons.setBackgroundResource(isChecked ? R.drawable.dark_background_bottom
-                : R.drawable.light_background_bottom);
+        textInputEditText_question.setTextColor(getColor(isChecked ? R.color.dark_question_foreground : R.color.light_question_foreground));
+        textInputEditText_question.setBackgroundResource(isChecked ? R.drawable.dark_background_top : R.drawable.light_background_top);
+        relativeLayout_main.setBackgroundResource(isChecked ? R.drawable.dark_background_middle : R.drawable.light_background_middle);
+        tableLayout_buttons.setBackgroundResource(isChecked ? R.drawable.dark_background_bottom : R.drawable.light_background_bottom);
 
         for (int i: numButtons) {
             Button button = findViewById(i);
-            button.setBackgroundResource(isChecked ? R.drawable.dark_number_button
-                    : R.drawable.light_number_button);
-
-            button.setTextColor(isChecked ? getResources().getColorStateList(R.drawable.dark_number_button)
-                    : getResources().getColorStateList(R.drawable.light_number_button));
+            button.setBackgroundResource(isChecked ? R.drawable.dark_number_button : R.drawable.light_number_button);
+            button.setTextColor(isChecked ? getResources().getColorStateList(R.drawable.dark_number_button) : getResources().getColorStateList(R.drawable.light_number_button));
         }
 
         for (int i: operationsButtons){
             Button button = findViewById(i);
-            button.setBackgroundResource(isChecked ? R.drawable.dark_symbol_button
-                    : R.drawable.light_symbol_button);
-
-            button.setTextColor(getColor(isChecked ? R.color.dark_symbol_button_foreground
-                    : R.color.light_symbol_button_foreground));
+            button.setBackgroundResource(isChecked ? R.drawable.dark_symbol_button : R.drawable.light_symbol_button);
+            button.setTextColor(getColor(isChecked ? R.color.dark_symbol_button_foreground : R.color.light_symbol_button_foreground));
         }
-
 
         for (int i: specialButtons_1){
             Button button = findViewById(i);
-            button.setBackgroundResource(isChecked ? R.drawable.dark_special_symbol_1_button
-                    : R.drawable.light_special_symbol_1_button);
-
-            button.setTextColor(getColor(isChecked ? R.color.dark_special_symbol_button_1_foreground
-                    : R.color.light_special_symbol_button_1_foreground));
+            button.setBackgroundResource(isChecked ? R.drawable.dark_special_symbol_1_button : R.drawable.light_special_symbol_1_button);
+            button.setTextColor(getColor(isChecked ? R.color.dark_special_symbol_button_1_foreground : R.color.light_special_symbol_button_1_foreground));
         }
 
         for (int i: specialButtons_2){
             Button button = findViewById(i);
-            button.setBackgroundResource(isChecked ? R.drawable.dark_special_symbol_2_button
-                    : R.drawable.light_special_symbol_2_button);
-
-            button.setTextColor(getColor(isChecked ? R.color.dark_special_symbol_button_2_foreground
-                    : R.color.light_special_symbol_button_2_foreground));
+            button.setBackgroundResource(isChecked ? R.drawable.dark_special_symbol_2_button : R.drawable.light_special_symbol_2_button);
+            button.setTextColor(getColor(isChecked ? R.color.dark_special_symbol_button_2_foreground : R.color.light_special_symbol_button_2_foreground));
         }
     }
 }
