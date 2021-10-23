@@ -198,14 +198,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_division:  updateEquation("/", false); break;
             case R.id.button_clear:     updateEquation("c", true); break;
             case R.id.button_equal:     updateEquation("=", true); break;
-
         }
     }
 
     void updateEquation(String str, boolean override){
         int cursorLocation;
 
-    if (str.equals("=")){
+        if (str.equals("=")){
             String equation = textInputEditText_question.getText().toString();
             equation  = equation.replaceAll(" ", "");
 
@@ -214,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
+            str = textView_answer.getText().toString();
         }
 
         // if clear
@@ -459,16 +459,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onLongClick(View v) {
         Button button = (Button) v;
 
-        if (button.getId() == R.id.button_clear) {
-            textInputEditText_question.setText(EMPTY_ANSWER);
-            textView_answer.setText(EMPTY_ANSWER);
-            textInputEditText_question.setSelection(EMPTY_ANSWER.length());
-        }
+        if (button.getId() == R.id.button_clear) clearAllEquation();
 
         return false;
     }
 
-
+    void clearAllEquation(){
+        textInputEditText_question.setText(EMPTY_ANSWER);
+        textView_answer.setText(EMPTY_ANSWER);
+        textInputEditText_question.setSelection(EMPTY_ANSWER.length());
+    }
 
 
 
