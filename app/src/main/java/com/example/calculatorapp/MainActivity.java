@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int[] numButtons, operationsButtons, specialButtons_1, specialButtons_2;
     final String EMPTY_ANSWER = "0";
+    final String ERROR_MSG = "ERROR";
 
 
     @SuppressLint("ResourceType")
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             TableRow.LayoutParams params = new TableRow.LayoutParams();
             params.weight = 1.0f;
-//            params.setMargins(15,15,15,15);
+            params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
             button.setTextColor(getColor(R.color.dark_special_symbol_button_2_foreground));
@@ -209,11 +210,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             equation  = equation.replaceAll(" ", "");
 
             if (!isEqualtionValid(equation)) {
-                textView_answer.setText("ERROR - 192");
+                textView_answer.setText(ERROR_MSG);
                 return;
             }
 
             str = textView_answer.getText().toString();
+
+            if (str.equals(ERROR_MSG)) return;
+
+            cursorLocation = str.length();
+            textInputEditText_question.setText(str);
+            textInputEditText_question.setSelection(cursorLocation);
+            textView_answer.setText("");
+            return;
         }
 
         // if clear
@@ -229,16 +238,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             isEqualtionValid(text);
             return;
         }
-
-        if (override){
-            if (str.equals("ERROR")) return;
-
-            cursorLocation = str.length();
-            textInputEditText_question.setText(str);
-            textInputEditText_question.setSelection(cursorLocation);
-            return;
-        }
-
 
         for (int i: numButtons) {
             Button button = findViewById(i);
@@ -304,7 +303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String token = symbol.nextToken().toString();
 
             if (token.length() > 1)  {
-                textView_answer.setText("ERROR - 289");
+                textView_answer.setText(ERROR_MSG);
                 return false;
             }
 
@@ -322,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.out.println("299: " + unwantedAnswers);
             switch (unwantedAnswers){
                 case "NaN": case "Infinity":
-                    textView_answer.setText("ERROR - 307");
+                    textView_answer.setText(ERROR_MSG);
             }
         } catch (Exception e){ }
 
@@ -330,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (str.charAt(0) == '-') count_symbol--;
 
-        if (!(number.countTokens() >= count_symbol))  textView_answer.setText("ERROR - 215");
+        if (!(number.countTokens() >= count_symbol))  textView_answer.setText(ERROR_MSG);
 
         return number.countTokens() > count_symbol;
     }
@@ -415,13 +414,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         while (group.hasMoreTokens()) {
             String gro = group_sym.nextToken();
-            if (gro.length() > 1) return "ERROR";
+            if (gro.length() > 1) return ERROR_MSG;
             if (gro.equals("+")) sum.append("+");
             if (gro.equals("-")) sum.append("-");
             String test = group.nextToken();
             double answer = divAndMult(test);
 
-            if ((answer + "").equals("NaN")) return "ERROR";
+            if ((answer + "").equals("NaN")) return ERROR_MSG;
             System.out.println("375: " + answer);
             sum.append(answer);
         }
