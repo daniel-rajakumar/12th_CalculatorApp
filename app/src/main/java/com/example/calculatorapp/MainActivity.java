@@ -183,61 +183,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button = (Button) v;
 
         switch (button.getId()){
-            case R.id.button_0:         updateEquation("0", false); break;
-            case R.id.button_1:         updateEquation("1", false); break;
-            case R.id.button_2:         updateEquation("2", false); break;
-            case R.id.button_3:         updateEquation("3", false); break;
-            case R.id.button_4:         updateEquation("4", false); break;
-            case R.id.button_5:         updateEquation("5", false); break;
-            case R.id.button_6:         updateEquation("6", false); break;
-            case R.id.button_7:         updateEquation("7", false); break;
-            case R.id.button_8:         updateEquation("8", false); break;
-            case R.id.button_9:         updateEquation("9", false); break;
-            case R.id.button_plus:      updateEquation("+", false); break;
-            case R.id.button_minus:     updateEquation("-", false); break;
-            case R.id.button_multiply:  updateEquation("*", false); break;
-            case R.id.button_division:  updateEquation("/", false); break;
-            case R.id.button_clear:     updateEquation("c", true); break;
-            case R.id.button_equal:     updateEquation("=", true); break;
+            case R.id.button_0:         updateEquation("0"); break;
+            case R.id.button_1:         updateEquation("1"); break;
+            case R.id.button_2:         updateEquation("2"); break;
+            case R.id.button_3:         updateEquation("3"); break;
+            case R.id.button_4:         updateEquation("4"); break;
+            case R.id.button_5:         updateEquation("5"); break;
+            case R.id.button_6:         updateEquation("6"); break;
+            case R.id.button_7:         updateEquation("7"); break;
+            case R.id.button_8:         updateEquation("8"); break;
+            case R.id.button_9:         updateEquation("9"); break;
+            case R.id.button_plus:      updateEquation("+"); break;
+            case R.id.button_minus:     updateEquation("-"); break;
+            case R.id.button_multiply:  updateEquation("*"); break;
+            case R.id.button_division:  updateEquation("/"); break;
+            case R.id.button_clear:     updateEquation("c"); break;
+            case R.id.button_equal:     updateEquation("="); break;
         }
     }
 
-    void updateEquation(String str, boolean override){
-        int cursorLocation;
+    void updateEquation(String str){
+        if (str.equals("=")){ onClickEqualButton(); return; }
+        if (str.equals("c")){ onClickClearButton(); return; }
 
-        if (str.equals("=")){
-            String equation = textInputEditText_question.getText().toString();
-            equation  = equation.replaceAll(" ", "");
-
-            if (!isEqualtionValid(equation)) {
-                textView_answer.setText(ERROR_MSG);
-                return;
-            }
-
-            str = textView_answer.getText().toString();
-
-            if (str.equals(ERROR_MSG)) return;
-
-            cursorLocation = str.length();
-            textInputEditText_question.setText(str);
-            textInputEditText_question.setSelection(cursorLocation);
-            textView_answer.setText("");
-            return;
-        }
-
-        // if clear
-        if (str.equals("c")){
-            String text = textInputEditText_question.getText().toString();
-            cursorLocation = textInputEditText_question.getSelectionStart() - 1;
-            if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
-            text = removeCharAt(text, cursorLocation);
-            textInputEditText_question.setText(text);
-            textInputEditText_question.setSelection(cursorLocation);
-            textView_answer.setText(solve(text));
-            System.out.println("clear: " + text);
-            isEqualtionValid(text);
-            return;
-        }
 
         for (int i: numButtons) {
             Button button = findViewById(i);
@@ -253,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        cursorLocation = textInputEditText_question.getSelectionStart();
+        int cursorLocation = textInputEditText_question.getSelectionStart();
         String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
         String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
 
@@ -275,6 +243,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+    }
+
+    void onClickEqualButton(){
+        String equation = textInputEditText_question.getText().toString();
+        equation  = equation.replaceAll(" ", "");
+
+        if (!isEqualtionValid(equation)) {
+            textView_answer.setText(ERROR_MSG);
+            return;
+        }
+
+       String str = textView_answer.getText().toString();
+
+        if (str.equals(ERROR_MSG)) return;
+
+        int cursorLocation = str.length();
+        textInputEditText_question.setText(str);
+        textInputEditText_question.setSelection(cursorLocation);
+        textView_answer.setText("");
+    }
+
+    void onClickClearButton(){
+        String text = textInputEditText_question.getText().toString();
+        int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
+        if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
+        text = removeCharAt(text, cursorLocation);
+        textInputEditText_question.setText(text);
+        textInputEditText_question.setSelection(cursorLocation);
+        textView_answer.setText(solve(text));
+        System.out.println("clear: " + text);
+        isEqualtionValid(text);
     }
 
 
