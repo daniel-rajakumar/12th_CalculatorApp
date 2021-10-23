@@ -34,6 +34,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        assignValues();
+        setup_questionView();
+        setup_answerView();
+        setup_mainLayoutView();
+        setup_buttonLayoutView();
+        setup_buttons();
+        setup_operationsButtons();
+        setup_specialButtons1();
+        setup_specialButtons2();
+    }
+
+    void assignValues(){
         numButtons = new int[]{
                 R.id.button_0,
                 R.id.button_1,
@@ -66,30 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         relativeLayout_main = findViewById(R.id.relative);
         tableLayout_buttons = findViewById(R.id.table_button);
         textInputEditText_question = findViewById(R.id.input);
-
-
         textView_answer = findViewById(R.id.textView_history);
+    }
 
-
-
-
-
-
-
-
-
-
-        textInputEditText_question.setShowSoftInputOnFocus(false);
-        textInputEditText_question.setText(EMPTY_ANSWER);
-
-        textView_answer.setTextColor(getColor(R.color.dark_answer_foreground));
-        textView_answer.setTextSize(150);
-
-        relativeLayout_main.setBackgroundResource(R.drawable.dark_background_middle);
-        tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
-        textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
-
-        // number buttons
+    void setup_buttons(){
         for (int i: numButtons){
             Button button = findViewById(i);
 
@@ -107,8 +99,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
+    }
 
-        // symbol buttons
+    void setup_operationsButtons(){
         for (int i: operationsButtons){
             Button button = findViewById(i);
 
@@ -126,7 +119,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setOnLongClickListener(this);
         }
 
-        // symbol buttons
+    }
+
+    void setup_specialButtons1(){
         for (int i: specialButtons_1){
             Button button = findViewById(i);
 
@@ -142,14 +137,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
+    }
 
-        // clear
+    void setup_specialButtons2(){
         for (int i: specialButtons_2){
             Button button = findViewById(i);
 
             TableRow.LayoutParams params = new TableRow.LayoutParams();
             params.weight = 1.0f;
-            params.setMargins(15,15,15,15);
+//            params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
             button.setTextColor(getColor(R.color.dark_special_symbol_button_2_foreground));
@@ -159,8 +155,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setOnClickListener(this);
             button.setOnLongClickListener(this);
         }
-
     }
+
+    void setup_questionView(){
+        textInputEditText_question.setShowSoftInputOnFocus(false);
+        textInputEditText_question.setText(EMPTY_ANSWER);
+        textInputEditText_question.setTextColor(getColor(R.color.dark_question_foreground));
+    }
+
+    void setup_answerView(){
+        textView_answer.setTextColor(getColor(R.color.dark_answer_foreground));
+        textView_answer.setTextSize(150);
+    }
+
+    void setup_mainLayoutView(){
+        relativeLayout_main.setBackgroundResource(R.drawable.dark_background_middle);
+    }
+
+    void setup_buttonLayoutView(){
+        tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
+    }
+
+
 
     @Override
     public void onClick(View v) {
