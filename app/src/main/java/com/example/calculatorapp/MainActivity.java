@@ -177,12 +177,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View v) {
         Button button = (Button) v;
 
-        String equation = textInputEditText_question.getText().toString();
         switch (button.getId()){
             case R.id.button_0:         updateEquation("0", false); break;
             case R.id.button_1:         updateEquation("1", false); break;
@@ -199,24 +197,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_multiply:  updateEquation("*", false); break;
             case R.id.button_division:  updateEquation("/", false); break;
             case R.id.button_clear:     updateEquation("c", true); break;
-            case R.id.button_equal:     {
-                equation = textInputEditText_question.getText().toString();
-                equation  = equation.replaceAll(" ", "");
+            case R.id.button_equal:     updateEquation("=", true); break;
 
-                if (!isEqualtionValid(equation)) {
-                    textView_answer.setText("ERROR - 192");
-                    return;
-                }
-                if (isEqualtionValid(equation)) {
-                    updateEquation(solve(equation), true);
-                }
-
-            }
         }
     }
 
     void updateEquation(String str, boolean override){
         int cursorLocation;
+
+    if (str.equals("=")){
+            String equation = textInputEditText_question.getText().toString();
+            equation  = equation.replaceAll(" ", "");
+
+            if (!isEqualtionValid(equation)) {
+                textView_answer.setText("ERROR - 192");
+                return;
+            }
+
+        }
 
         // if clear
         if (str.equals("c")){
@@ -450,6 +448,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return sum.toString();
     }
 
+
+
+
+
+
+
+
     @Override
     public boolean onLongClick(View v) {
         Button button = (Button) v;
@@ -462,6 +467,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return false;
     }
+
+
+
+
+
+
+
+
+
+
 
     SwitchCompat aSwitch;
 
