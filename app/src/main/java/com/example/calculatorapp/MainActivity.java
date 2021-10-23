@@ -202,47 +202,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void updateEquation(String str){
-        if (str.equals("=")){ onClickEqualButton(); return; }
-        if (str.equals("c")){ onClickClearButton(); return; }
+    void updateEquation(String text ){
+        if (text.equals("=")){ onClickEqualButton(); return; }
+        if (text.equals("c")){ onClickClearButton(); return; }
 
 
-        for (int i: numButtons) {
-            Button button = findViewById(i);
-            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
-                textInputEditText_question.setText("");
-            }
-        }
+        overrideDefaultEquation(text);
+        addTextToEquation(text);
+        showLiveAnswer();
 
+        isEqualtionValid("0" + textInputEditText_question.getText().toString());
+    }
 
-//        if (textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
-//            textInputEditText_question.setText("");
-//        }
-
-
-
+    void addTextToEquation(String str){
         int cursorLocation = textInputEditText_question.getSelectionStart();
         String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
         String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
 
         textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
         textInputEditText_question.setSelection(cursorLocation + 1);
+    }
 
-
-
-        try {
-            textView_answer.setText(solve(textInputEditText_question.getText().toString()));
-
-        } catch (Exception e){
-            System.err.println("in update equ: "  + e);
+    void overrideDefaultEquation(String str){
+        for (int i: numButtons) {
+            Button button = findViewById(i);
+            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
+                textInputEditText_question.setText("");
+            }
         }
-
-        isEqualtionValid("0" + textInputEditText_question.getText().toString());
-
-
-
-
-
     }
 
     void onClickEqualButton(){
@@ -276,6 +263,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         isEqualtionValid(text);
     }
 
+    void showLiveAnswer(){
+        try {
+            textView_answer.setText(solve(textInputEditText_question.getText().toString()));
+        } catch (Exception e){
+            System.err.println("in update equ: "  + e);
+        }
+    }
 
 
 
@@ -332,6 +326,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return number.countTokens() > count_symbol;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
