@@ -237,10 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         boolean validEquation = isEquationValid(equation, false);
 
-        if (!validEquation) {
-            textView_answer.setText(ERROR_MSG);
-            return;
-        }
+        if (!validEquation) { textView_answer.setText(ERROR_MSG); return; }
 
        String answer = textView_answer.getText().toString();
 
@@ -303,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isSymbolAreNearEachOther(symbol)) return false;
 
         try {
-            String unwantedAnswers = divAndMult(str) + "";
+            String unwantedAnswers = divAndMulti(str) + "";
             System.out.println("299: " + unwantedAnswers);
             switch (unwantedAnswers){
                 case "NaN": case "Infinity":
@@ -362,30 +359,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    double divAndMult(String str){
+    double divAndMulti(String str){
         double sum;
         StringTokenizer number = new StringTokenizer(str, "*/");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         if (number.countTokens() < 1) return 0;
 
-//        if (number.countTokens() != symbol.countTokens())
         sum = Double.parseDouble(number.nextToken());
 
         while (number.hasMoreTokens()){
@@ -396,10 +376,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("/")) sum /= Double.parseDouble(num);
         }
 
-//        sum = Math.round(sum * 10000000.0) / 10000000.0;
-        System.out.println("sum_1: " + sum);
-        System.out.println("350: " + String.format("%.0f", sum));
-
         if ((sum+"").contains("E-")) return 0;
         if ((sum+"").contains("E")) return Double.MAX_VALUE;
 
@@ -408,11 +384,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     double addAndSub(String str){
         double sum = 0;
-//        str = "0" + str;
         StringTokenizer number = new StringTokenizer(str, "+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
-        System.out.println("357: 1)" + str);
         sum = Double.parseDouble(number.nextToken());
 
         while (number.hasMoreTokens()){
@@ -423,14 +397,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (sym.equals("-")) sum -= Double.parseDouble(num);
         }
 
-        System.out.println("357: 2)" + sum);
-
-
-
-
         return sum;
     }
-    
+
+
+
+
 
     String solve(String equation){
         StringTokenizer group, group_sym;
@@ -447,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        sum = new StringBuilder(divAndMult(group.nextToken()) + "");
+        sum = new StringBuilder(divAndMulti(group.nextToken()) + "");
 
 
 
@@ -457,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (gro.equals("+")) sum.append("+");
             if (gro.equals("-")) sum.append("-");
             String test = group.nextToken();
-            double answer = divAndMult(test);
+            double answer = divAndMulti(test);
 
             if ((answer + "").equals("NaN")) return ERROR_MSG;
             System.out.println("375: " + answer);
@@ -472,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         try {
-            String unwantedAnswers = divAndMult(equation) + "";
+            String unwantedAnswers = divAndMulti(equation) + "";
             switch (unwantedAnswers){
                 case "NaN": case "Infinity":
                     return equation.substring(1);
