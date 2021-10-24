@@ -27,9 +27,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int[] numButtons, operationsButtons, specialButtons_1, specialButtons_2;
     final String EMPTY_ANSWER = "0";
     final String ERROR_MSG = "ERROR";
+    SwitchCompat aSwitch;
 
 
-    @SuppressLint("ResourceType")
+
+    /******************************************************************************************
+     ************************************ on create *******************************************
+     ******************************************************************************************/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setup_specialButtons1();
         setup_specialButtons2();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.nightmode, menu);
+
+        setup_switch(menu);
+        setup_switchToggleAction();
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /******************************************************************************************
+     ************************************ setup ***********************************************
+     ******************************************************************************************/
 
     void assignValues(){
         numButtons = new int[]{
@@ -76,10 +96,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
 
 
-        relativeLayout_main = findViewById(R.id.relative);
-        tableLayout_buttons = findViewById(R.id.table_button);
-        textInputEditText_question = findViewById(R.id.input);
-        textView_answer = findViewById(R.id.textView_history);
+        relativeLayout_main =        findViewById(R.id.relative);
+        tableLayout_buttons =        findViewById(R.id.table_button);
+        textInputEditText_question = findViewById(R.id.textInput_question);
+        textView_answer =            findViewById(R.id.textView_answer);
     }
 
     void setup_buttons(){
@@ -91,8 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             params.setMargins(15,15,15,15);
             button.setLayoutParams(params);
 
-
-//            button.setTextColor(Color.rgb(200, 200, 200));
             button.setTextSize(50);
             button.setBackgroundTintList(null);
             button.setBackgroundResource(R.drawable.dark_number_button);
@@ -177,6 +195,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tableLayout_buttons.setBackgroundResource(R.drawable.dark_background_bottom);
     }
 
+    void setup_switch(Menu menu){
+        aSwitch = menu.findItem(R.id.app_bar_switch)
+                .setActionView(R.layout.switch_item)
+                .getActionView()
+                .findViewById(R.id.theme_switch);
+
+        aSwitch.toggle();
+    }
+
+    void setup_switchToggleAction(){
+        aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSwitchToggle(isChecked));
+    }
+
+    /******************************************************************************************
+    ********************************** onClick ***********************************************
+    ******************************************************************************************/
 
     @Override
     public void onClick(View v) {
@@ -202,199 +236,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void updateEquation(String text ){
-        if (text.equals("=")){ onClickEqualButton(); return; }
-        if (text.equals("c")){ onClickClearButton(); return; }
+    /******************************************************************************************
+     ********************************** onLongClick *******************************************
+     ******************************************************************************************/
 
+    @Override
+    public boolean onLongClick(View v) {
+        Button button = (Button) v;
 
-        overrideDefaultEquation(text);
-        addTextToEquation(text);
-        showLiveAnswer();
+        if (button.getId() == R.id.button_clear) clearAllEquation();
 
-    }
-
-    void addTextToEquation(String str){
-        int cursorLocation = textInputEditText_question.getSelectionStart();
-        String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
-        String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
-
-        textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
-        textInputEditText_question.setSelection(cursorLocation + 1);
-    }
-
-    void overrideDefaultEquation(String str){
-        for (int i: numButtons) {
-            Button button = findViewById(i);
-            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
-                textInputEditText_question.setText("");
-            }
-        }
-    }
-
-    void onClickEqualButton(){
-        String equation = textInputEditText_question.getText().toString();
-        equation  = equation.replaceAll(" ", "");
-
-        boolean validEquation = isEquationValid(equation, false);
-
-        if (!validEquation) { textView_answer.setText(ERROR_MSG); return; }
-
-       String answer = textView_answer.getText().toString();
-
-        if (answer.equals("")) return;
-
-        int cursorLocation = answer.length();
-        textInputEditText_question.setText(answer);
-        textInputEditText_question.setSelection(cursorLocation);
-        textView_answer.setText("");
-    }
-
-    void onClickClearButton(){
-        String text = textInputEditText_question.getText().toString();
-        int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
-        if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
-
-        removeCharAt(text, cursorLocation);
-
-        text = textInputEditText_question.getText().toString();
-        if (isEquationValid(text, true)){
-            textView_answer.setText(solve(text));
-        }
-    }
-
-    void showLiveAnswer(){
-        String equation = textInputEditText_question.getText().toString();
-        if (isEquationValid(equation, true)){
-            textView_answer.setText(solve(equation));
-        } else {
-            textView_answer.setText(ERROR_MSG);
-        }
-    }
-
-
-
-    void removeCharAt(String equation, int cursorLocation){
-
-        if (equation.length() == 1) {
-            cursorLocation = 1;
-            equation = EMPTY_ANSWER;
-        } else {
-            equation = equation.substring(0, cursorLocation) + equation.substring(cursorLocation + 1);
-        }
-
-        textInputEditText_question.setText(equation);
-        textInputEditText_question.setSelection(cursorLocation);
-    }
-
-    
-
-    boolean isEquationValid(String str, boolean forLiveAnswer){
-        int  count_symbol = 0, count_number = 0;
-        StringTokenizer number = new StringTokenizer(str, "*/+-");
-        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
-
-        count_number = number.countTokens();
-        count_symbol = numberOfSymbols(symbol);
-
-        symbol = new StringTokenizer(str, "1234567890.");
-
-
-        if (isSymbolAreNearEachOther(symbol)) return false;
-        if (isEquationEmpty(str)) return false;
-        if (isSpecialAnswer(divAndMulti(str))) return false;
-
-
-        if (isLeftMostNumberIsNegative(str)) {
-            count_symbol--;
-        }
-
-        if (forLiveAnswer) {
-            return hasMoreNumbersThanSymbols(count_number, count_symbol - 1);
-        }
-
-        return hasMoreNumbersThanSymbols(count_number, count_symbol);
-    }
-
-    boolean isLeftMostNumberIsNegative(String equation){
-        return equation.charAt(0) == '-';
-    }
-
-    boolean isEquationEmpty(String equation){
-        return equation.equals("");
-    }
-
-    int numberOfSymbols(StringTokenizer token){
-        int count_symbol = 0;
-
-        while (token.hasMoreTokens()) {
-            String symbols = token.nextToken();
-            for (int i = 0; i < symbols.length(); i++) {
-                count_symbol++;
-            }
-        }
-
-        return count_symbol;
-    }
-
-    boolean isSymbolAreNearEachOther(StringTokenizer token){
-        while (token.hasMoreTokens()){
-            String symbols = token.nextToken().toString();
-            if (symbols.length() > 1) {
-                return true;
-            }
-        }
         return false;
     }
 
-    boolean hasMoreNumbersThanSymbols(int number, int symbol){
-        return number > symbol;
-    }
-
-
-
-
-
-    double divAndMulti(String str){
-        double sum;
-        StringTokenizer number = new StringTokenizer(str, "*/-+");
-        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
-
-        if (number.countTokens() < 1) return 0;
-
-        sum = Double.parseDouble(number.nextToken());
-
-        while (number.hasMoreTokens()){
-            String sym = symbol.nextToken();
-            String num = number.nextToken();
-
-            if (sym.equals("*")) sum *= Double.parseDouble(num);
-            if (sym.equals("/")) sum /= Double.parseDouble(num);
-        }
-
-        if ((sum+"").contains("E-")) return 0;
-        if ((sum+"").contains("E")) return Double.MAX_VALUE;
-
-        return sum;
-    }
-
-    double addAndSub(String str){
-        double sum = 0;
-        StringTokenizer number = new StringTokenizer(str, "+-");
-        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
-
-        sum = Double.parseDouble(number.nextToken());
-
-        while (number.hasMoreTokens()){
-            String sym = symbol.nextToken();
-            String num = number.nextToken();
-
-            if (sym.equals("+")) sum += Double.parseDouble(num);
-            if (sym.equals("-")) sum -= Double.parseDouble(num);
-        }
-
-        return sum;
-    }
-
+    /******************************************************************************************
+     **************************************** solve *******************************************
+     ******************************************************************************************/
 
     String solve(String equation){
         String solution;
@@ -416,106 +273,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return solution.toString();
     }
 
-    String getRidOfDivAndMulti(String equation){
-        StringTokenizer group, group_sym;
-        String solution = "";
-
-        group = new StringTokenizer(equation, "-+");
-        group_sym = new StringTokenizer(equation, "/*1234567890.");
-
-        solution = divAndMulti(group.nextToken()) + "";
-
-        while (group.hasMoreTokens()) {
-            String gro = group_sym.nextToken();
-            if (gro.length() > 1) return ERROR_MSG;
-            if (gro.equals("+")) solution += "+";
-            if (gro.equals("-")) solution += "-";
-            double answer = divAndMulti(group.nextToken());
-
-            if (isSpecialAnswer(answer)) return ERROR_MSG;
-
-            solution += answer;
-        }
-
-
-        return solution;
-    }
-
-    String removeDecimalPlacesIfNotNeeded(String solution){
-        if (Double.parseDouble(solution) % 1 == 0) {
-            return ((int) Double.parseDouble(solution)) + "";
-        }
-        return  solution;
-    }
-
-
-
-    boolean isSpecialAnswer(double answer){
-        switch (answer + ""){
-            case "NaN": case "Infinity":
-                return true;
-        }
-        return false;
-    }
-
-    boolean noSymbolsInEquation(String equation){
-        return new StringTokenizer(equation, "-+/*").countTokens() == 0;
-    }
-
-
-
-
-
-
-    @Override
-    public boolean onLongClick(View v) {
-        Button button = (Button) v;
-
-        if (button.getId() == R.id.button_clear) clearAllEquation();
-
-        return false;
-    }
-
-    void clearAllEquation(){
-        textInputEditText_question.setText(EMPTY_ANSWER);
-        textView_answer.setText(EMPTY_ANSWER);
-        textInputEditText_question.setSelection(EMPTY_ANSWER.length());
-    }
-
-
-
-
-
-
-
-
-
-    SwitchCompat aSwitch;
-
-    @SuppressLint({"ResourceType", "UseCompatLoadingForColorStateLists"})
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.nightmode, menu);
-
-        setup_switch(menu);
-        setup_switchToggleAction();
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    void setup_switch(Menu menu){
-        aSwitch = menu.findItem(R.id.app_bar_switch)
-                .setActionView(R.layout.switch_item)
-                .getActionView()
-                .findViewById(R.id.theme_switch);
-
-        aSwitch.toggle();
-    }
-
-    void setup_switchToggleAction(){
-        aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSwitchToggle(isChecked));
-    }
+    /******************************************************************************************
+     ********************************** toggleSwitch ******************************************
+     ******************************************************************************************/
 
     @SuppressLint({"ResourceType", "UseCompatLoadingForColorStateLists"})
     void onSwitchToggle(boolean isChecked){
@@ -559,5 +319,247 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             button.setTextColor(getColor(isChecked ? R.color.dark_special_symbol_button_2_foreground
                                                    : R.color.light_special_symbol_button_2_foreground));
         }
+    }
+
+    /******************************************************************************************
+     ********************************** general methods ****************************************
+     ******************************************************************************************/
+
+    void updateEquation(String text ){
+        if (text.equals("=")){ onClickEqualButton(); return; }
+        if (text.equals("c")){ onClickClearButton(); return; }
+
+
+        overrideDefaultEquation(text);
+        addTextToEquation(text);
+        showLiveAnswer();
+    }
+
+    void addTextToEquation(String str){
+        int cursorLocation = textInputEditText_question.getSelectionStart();
+        String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
+        String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
+
+        textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
+        textInputEditText_question.setSelection(cursorLocation + 1);
+    }
+
+    void overrideDefaultEquation(String str){
+        for (int i: numButtons) {
+            Button button = findViewById(i);
+            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
+                textInputEditText_question.setText("");
+            }
+        }
+    }
+
+
+
+    void onClickEqualButton(){
+        String equation = textInputEditText_question.getText().toString();
+        equation  = equation.replaceAll(" ", "");
+
+        boolean validEquation = isEquationValid(equation, false);
+
+        if (!validEquation) { textView_answer.setText(ERROR_MSG); return; }
+
+       String answer = textView_answer.getText().toString();
+
+        if (answer.equals("")) return;
+
+        int cursorLocation = answer.length();
+        textInputEditText_question.setText(answer);
+        textInputEditText_question.setSelection(cursorLocation);
+        textView_answer.setText("");
+    }
+
+    void onClickClearButton(){
+        String text = textInputEditText_question.getText().toString();
+        int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
+        if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
+
+        removeCharAt(text, cursorLocation);
+
+        text = textInputEditText_question.getText().toString();
+        if (isEquationValid(text, true)){
+            textView_answer.setText(solve(text));
+        }
+    }
+
+    void showLiveAnswer(){
+        String equation = textInputEditText_question.getText().toString();
+        if (isEquationValid(equation, true)){
+            textView_answer.setText(solve(equation));
+        } else {
+            textView_answer.setText(ERROR_MSG);
+        }
+    }
+
+    void removeCharAt(String equation, int cursorLocation){
+
+        if (equation.length() == 1) {
+            cursorLocation = 1;
+            equation = EMPTY_ANSWER;
+        } else {
+            equation = equation.substring(0, cursorLocation) + equation.substring(cursorLocation + 1);
+        }
+
+        textInputEditText_question.setText(equation);
+        textInputEditText_question.setSelection(cursorLocation);
+    }
+
+    boolean isEquationValid(String str, boolean forLiveAnswer){
+        int  count_symbol = 0, count_number = 0;
+        StringTokenizer number = new StringTokenizer(str, "*/+-");
+        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
+
+        count_number = number.countTokens();
+        count_symbol = numberOfSymbols(symbol);
+
+        symbol = new StringTokenizer(str, "1234567890.");
+
+
+        if (areSymbolsNearEachOther(symbol)) return false;
+        if (isEquationEmpty(str)) return false;
+        if (isSpecialAnswer(divAndMulti(str))) return false;
+
+
+        if (isLeftMostNumberIsNegative(str)) {
+            count_symbol--;
+        }
+
+        if (forLiveAnswer) {
+            return hasMoreNumbersThanSymbols(count_number, count_symbol - 1);
+        }
+
+        return hasMoreNumbersThanSymbols(count_number, count_symbol);
+    }
+
+    boolean isLeftMostNumberIsNegative(String equation){
+        return equation.charAt(0) == '-';
+    }
+
+    boolean isEquationEmpty(String equation){
+        return equation.equals("");
+    }
+
+    int numberOfSymbols(StringTokenizer token){
+        int count_symbol = 0;
+
+        while (token.hasMoreTokens()) {
+            String symbols = token.nextToken();
+            for (int i = 0; i < symbols.length(); i++) {
+                count_symbol++;
+            }
+        }
+
+        return count_symbol;
+    }
+
+    boolean areSymbolsNearEachOther(StringTokenizer token){
+        while (token.hasMoreTokens()){
+            String symbols = token.nextToken().toString();
+            if (symbols.length() > 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean hasMoreNumbersThanSymbols(int number, int symbol){
+        return number > symbol;
+    }
+
+
+    double divAndMulti(String str){
+         double sum;
+         StringTokenizer number = new StringTokenizer(str, "*/-+");
+         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
+
+         if (number.countTokens() < 1) return 0;
+
+         sum = Double.parseDouble(number.nextToken());
+
+         while (number.hasMoreTokens()){
+             String sym = symbol.nextToken();
+             String num = number.nextToken();
+
+             if (sym.equals("*")) sum *= Double.parseDouble(num);
+             if (sym.equals("/")) sum /= Double.parseDouble(num);
+         }
+
+         if ((sum+"").contains("E-")) return 0;
+         if ((sum+"").contains("E")) return Double.MAX_VALUE;
+
+         return sum;
+    }
+
+    double addAndSub(String str){
+        StringTokenizer number = new StringTokenizer(str, "+-");
+        StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
+
+        double sum = Double.parseDouble(number.nextToken());
+
+        while (number.hasMoreTokens()){
+            String sym = symbol.nextToken();
+            String num = number.nextToken();
+
+            if (sym.equals("+")) sum += Double.parseDouble(num);
+            if (sym.equals("-")) sum -= Double.parseDouble(num);
+        }
+
+        return sum;
+    }
+
+
+
+    String getRidOfDivAndMulti(String equation){
+        StringTokenizer group, group_sym;
+        String solution = "";
+
+        group = new StringTokenizer(equation, "-+");
+        group_sym = new StringTokenizer(equation, "/*1234567890.");
+
+        solution = divAndMulti(group.nextToken()) + "";
+
+        while (group.hasMoreTokens()) {
+            String gro = group_sym.nextToken();
+            if (gro.length() > 1) return ERROR_MSG;
+            if (gro.equals("+")) solution += "+";
+            if (gro.equals("-")) solution += "-";
+            double answer = divAndMulti(group.nextToken());
+
+            if (isSpecialAnswer(answer)) return ERROR_MSG;
+
+            solution += answer;
+        }
+
+
+        return solution;
+    }
+
+    String removeDecimalPlacesIfNotNeeded(String solution){
+        if (Double.parseDouble(solution) % 1 == 0) {
+            return ((int) Double.parseDouble(solution)) + "";
+        }
+        return  solution;
+    }
+
+    boolean isSpecialAnswer(double answer){
+        switch (answer + ""){
+            case "NaN": case "Infinity":
+                return true;
+        }
+        return false;
+    }
+
+    boolean noSymbolsInEquation(String equation){
+        return new StringTokenizer(equation, "-+/*").countTokens() == 0;
+    }
+
+    void clearAllEquation(){
+         textInputEditText_question.setText(EMPTY_ANSWER);
+         textView_answer.setText(EMPTY_ANSWER);
+         textInputEditText_question.setSelection(EMPTY_ANSWER.length());
     }
 }
