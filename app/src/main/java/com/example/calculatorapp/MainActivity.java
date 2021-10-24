@@ -297,16 +297,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         count_symbol = numberOfSymbols(symbol);
 
         symbol = new StringTokenizer(str, "1234567890.");
-        if (isSymbolAreNearEachOther(symbol)) return false;
 
-        try {
-            String unwantedAnswers = divAndMulti(str) + "";
-            System.out.println("299: " + unwantedAnswers);
-            switch (unwantedAnswers){
-                case "NaN": case "Infinity":
-                    textView_answer.setText(ERROR_MSG);
-            }
-        } catch (Exception e){ }
+
+        if (isSymbolAreNearEachOther(symbol)) return false;
+        if (isEquationEmpty(str)) return false;
+        if (isSpecialAnswer(divAndMulti(str))) return false;
 
 
         if (isLeftMostNumberIsNegative(str)) {
@@ -324,6 +319,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return equation.charAt(0) == '-';
     }
 
+    boolean isEquationEmpty(String equation){
+        return equation.equals("");
+    }
+
     int numberOfSymbols(StringTokenizer token){
         int count_symbol = 0;
 
@@ -338,16 +337,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     boolean isSymbolAreNearEachOther(StringTokenizer token){
-        System.out.println("349: insymbols");
         while (token.hasMoreTokens()){
             String symbols = token.nextToken().toString();
-            System.out.println("349 - length: " + symbols.length());
             if (symbols.length() > 1) {
-                System.out.println("349: YES");
                 return true;
             }
         }
-
         return false;
     }
 
@@ -361,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     double divAndMulti(String str){
         double sum;
-        StringTokenizer number = new StringTokenizer(str, "*/");
+        StringTokenizer number = new StringTokenizer(str, "*/-+");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
         if (number.countTokens() < 1) return 0;
@@ -401,64 +396,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-
-
     String solve(String equation){
-        StringTokenizer group, group_sym;
-        StringBuilder sum;
-
+        String solution;
 
         equation = "0" + equation;
 
-        System.out.println("359: " + equation);
-        if (new StringTokenizer(equation, "-+/*").countTokens() == 0) return EMPTY_ANSWER;
+        if (noSymbolsInEquation(equation)) return EMPTY_ANSWER;
+
+        solution = getRidOfDivAndMulti(equation);
+        solution = addAndSub(solution.toString()) + "";
+        solution = removeDecimalPlacesIfNotNeeded(solution);
+
+        if (isSpecialAnswer(divAndMulti(equation))) {
+            return equation.substring(1);
+        }
+
+        textView_answer.setText("");
+
+        return solution.toString();
+    }
+
+    String getRidOfDivAndMulti(String equation){
+        StringTokenizer group, group_sym;
+        String solution = "";
 
         group = new StringTokenizer(equation, "-+");
         group_sym = new StringTokenizer(equation, "/*1234567890.");
 
-
-
-        sum = new StringBuilder(divAndMulti(group.nextToken()) + "");
-
-
+        solution = divAndMulti(group.nextToken()) + "";
 
         while (group.hasMoreTokens()) {
             String gro = group_sym.nextToken();
             if (gro.length() > 1) return ERROR_MSG;
-            if (gro.equals("+")) sum.append("+");
-            if (gro.equals("-")) sum.append("-");
-            String test = group.nextToken();
-            double answer = divAndMulti(test);
+            if (gro.equals("+")) solution += "+";
+            if (gro.equals("-")) solution += "-";
+            double answer = divAndMulti(group.nextToken());
 
-            if ((answer + "").equals("NaN")) return ERROR_MSG;
-            System.out.println("375: " + answer);
-            sum.append(answer);
+            if (isSpecialAnswer(answer)) return ERROR_MSG;
+
+            solution += answer;
         }
 
-        sum = new StringBuilder(addAndSub(sum.toString()) + "");
 
+        return solution;
+    }
 
-        if (Double.parseDouble(sum.toString()) % 1 == 0) {
-            sum = new StringBuilder((int) (Double.parseDouble(sum.toString())) + "");
+    String removeDecimalPlacesIfNotNeeded(String solution){
+        if (Double.parseDouble(solution) % 1 == 0) {
+            return ((int) Double.parseDouble(solution)) + "";
         }
-
-        try {
-            String unwantedAnswers = divAndMulti(equation) + "";
-            switch (unwantedAnswers){
-                case "NaN": case "Infinity":
-                    return equation.substring(1);
-            }
-        } catch (Exception e){ }
-
-        textView_answer.setText("");
-
-
-
-        return sum.toString();
+        return  solution;
     }
 
 
+
+    boolean isSpecialAnswer(double answer){
+        switch (answer + ""){
+            case "NaN": case "Infinity":
+                return true;
+        }
+        return false;
+    }
+
+    boolean noSymbolsInEquation(String equation){
+        return new StringTokenizer(equation, "-+/*").countTokens() == 0;
+    }
 
 
 
