@@ -23,12 +23,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TableLayout tableLayout_buttons;
     TextInputEditText textInputEditText_question;
     TextView textView_answer;
+    SwitchCompat themeSwitch;
 
     int[] numButtons, operationsButtons, specialButtons_1, specialButtons_2;
     final String EMPTY_ANSWER = "0";
     final String ERROR_MSG = "ERROR";
-    SwitchCompat aSwitch;
-
 
 
     /******************************************************************************************
@@ -196,16 +195,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void setup_switch(Menu menu){
-        aSwitch = menu.findItem(R.id.app_bar_switch)
+        themeSwitch = menu.findItem(R.id.app_bar_switch)
                 .setActionView(R.layout.switch_item)
                 .getActionView()
                 .findViewById(R.id.theme_switch);
 
-        aSwitch.toggle();
+        themeSwitch.toggle();
     }
 
     void setup_switchToggleAction(){
-        aSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSwitchToggle(isChecked));
+        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> onSwitchToggle(isChecked));
     }
 
     /******************************************************************************************
@@ -235,6 +234,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_equal:     updateEquation("="); break;
         }
     }
+
+    void updateEquation(String text ){
+        if (text.equals("=")){ onClickEqualButton(); return; }
+        if (text.equals("c")){ onClickClearButton(); return; }
+
+
+        overrideDefaultEquation(text);
+        addTextToEquation(text);
+        showLiveAnswer();
+    }
+
+    void onClickEqualButton(){
+        String equation = textInputEditText_question.getText().toString();
+        equation  = equation.replaceAll(" ", "");
+
+        boolean validEquation = isEquationValid(equation, false);
+
+        if (!validEquation) { textView_answer.setText(ERROR_MSG); return; }
+
+        String answer = textView_answer.getText().toString();
+
+        if (answer.equals("")) return;
+
+        int cursorLocation = answer.length();
+        textInputEditText_question.setText(answer);
+        textInputEditText_question.setSelection(cursorLocation);
+        textView_answer.setText("");
+    }
+
+    void onClickClearButton(){
+        String text = textInputEditText_question.getText().toString();
+        int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
+        if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
+
+        removeCharAt(text, cursorLocation);
+
+        text = textInputEditText_question.getText().toString();
+        if (isEquationValid(text, true)){
+            textView_answer.setText(solve(text));
+        }
+    }
+
+
+    void addTextToEquation(String str){
+        int cursorLocation = textInputEditText_question.getSelectionStart();
+        String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
+        String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
+
+        textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
+        textInputEditText_question.setSelection(cursorLocation + 1);
+    }
+
+    void overrideDefaultEquation(String str){
+        for (int i: numButtons) {
+            Button button = findViewById(i);
+            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
+                textInputEditText_question.setText("");
+            }
+        }
+    }
+
+
+
+    void showLiveAnswer(){
+        String equation = textInputEditText_question.getText().toString();
+        if (isEquationValid(equation, true)){
+            textView_answer.setText(solve(equation));
+        } else {
+            textView_answer.setText(ERROR_MSG);
+        }
+    }
+
 
     /******************************************************************************************
      ********************************** onLongClick *******************************************
@@ -322,78 +393,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /******************************************************************************************
-     ********************************** general methods ****************************************
+     ********************************* other general methods **********************************
      ******************************************************************************************/
-
-    void updateEquation(String text ){
-        if (text.equals("=")){ onClickEqualButton(); return; }
-        if (text.equals("c")){ onClickClearButton(); return; }
-
-
-        overrideDefaultEquation(text);
-        addTextToEquation(text);
-        showLiveAnswer();
-    }
-
-    void addTextToEquation(String str){
-        int cursorLocation = textInputEditText_question.getSelectionStart();
-        String leftHalf = textInputEditText_question.getText().toString().substring(0, cursorLocation);
-        String rightHalf = textInputEditText_question.getText().toString().substring(cursorLocation);
-
-        textInputEditText_question.setText(String.format("%s%s%s", leftHalf, str, rightHalf));
-        textInputEditText_question.setSelection(cursorLocation + 1);
-    }
-
-    void overrideDefaultEquation(String str){
-        for (int i: numButtons) {
-            Button button = findViewById(i);
-            if (button.getText().toString().equals(str) && textInputEditText_question.getText().toString().equals(EMPTY_ANSWER)){
-                textInputEditText_question.setText("");
-            }
-        }
-    }
-
-
-
-    void onClickEqualButton(){
-        String equation = textInputEditText_question.getText().toString();
-        equation  = equation.replaceAll(" ", "");
-
-        boolean validEquation = isEquationValid(equation, false);
-
-        if (!validEquation) { textView_answer.setText(ERROR_MSG); return; }
-
-       String answer = textView_answer.getText().toString();
-
-        if (answer.equals("")) return;
-
-        int cursorLocation = answer.length();
-        textInputEditText_question.setText(answer);
-        textInputEditText_question.setSelection(cursorLocation);
-        textView_answer.setText("");
-    }
-
-    void onClickClearButton(){
-        String text = textInputEditText_question.getText().toString();
-        int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
-        if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
-
-        removeCharAt(text, cursorLocation);
-
-        text = textInputEditText_question.getText().toString();
-        if (isEquationValid(text, true)){
-            textView_answer.setText(solve(text));
-        }
-    }
-
-    void showLiveAnswer(){
-        String equation = textInputEditText_question.getText().toString();
-        if (isEquationValid(equation, true)){
-            textView_answer.setText(solve(equation));
-        } else {
-            textView_answer.setText(ERROR_MSG);
-        }
-    }
 
     void removeCharAt(String equation, int cursorLocation){
 
