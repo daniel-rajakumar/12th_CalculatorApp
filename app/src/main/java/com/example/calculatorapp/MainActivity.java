@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addTextToEquation(text);
         showLiveAnswer();
 
-        isEqualtionValid("0" + textInputEditText_question.getText().toString());
+        isEquationValid("0" + textInputEditText_question.getText().toString());
     }
 
     void addTextToEquation(String str){
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String equation = textInputEditText_question.getText().toString();
         equation  = equation.replaceAll(" ", "");
 
-        if (!isEqualtionValid(equation)) {
+        if (!isEquationValid(equation)) {
             textView_answer.setText(ERROR_MSG);
             return;
         }
@@ -255,12 +255,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String text = textInputEditText_question.getText().toString();
         int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
         if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
-        text = removeCharAt(text, cursorLocation);
-        textInputEditText_question.setText(text);
-        textInputEditText_question.setSelection(cursorLocation);
-        textView_answer.setText(solve(text));
-        System.out.println("clear: " + text);
-        isEqualtionValid(text);
+//        textInputEditText_question.setText(text);
+
+        removeCharAt(text, cursorLocation);
+
+        text = textInputEditText_question.getText().toString();
+        if (isEquationValid(text)){
+            textView_answer.setText(solve(text));
+        }
+
     }
 
     void showLiveAnswer(){
@@ -273,20 +276,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    String removeCharAt(String str, int index){
-        if (str.length() == 1) return EMPTY_ANSWER;
-        return str.substring(0, index) + str.substring(index + 1);
+    void removeCharAt(String str, int index){
+        String s;
+
+        if (str.length() == 1) {
+            index = 1;
+            s = EMPTY_ANSWER;
+        } else {
+            s = str.substring(0, index) + str.substring(index + 1);
+        }
+
+
+        textInputEditText_question.setText(s);
+        textInputEditText_question.setSelection(index);
     }
 
     
 
-    boolean isEqualtionValid(String str){
-        double sum;
+    boolean isEquationValid(String str){
         int  count_symbol = 0;
-
-
-
-
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
@@ -341,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    
+
 
 
 
