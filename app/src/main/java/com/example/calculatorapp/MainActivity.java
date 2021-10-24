@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addTextToEquation(text);
         showLiveAnswer();
 
-        isEquationValid("0" + textInputEditText_question.getText().toString());
+//        isEquationValid("0" + textInputEditText_question.getText().toString());
     }
 
     void addTextToEquation(String str){
@@ -236,14 +236,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String equation = textInputEditText_question.getText().toString();
         equation  = equation.replaceAll(" ", "");
 
-        if (!isEquationValid(equation)) {
-            textView_answer.setText(ERROR_MSG);
+        boolean validEquation = isEquationValid(equation, false);
+
+        if (!validEquation) {
+//            textView_answer.setText(ERROR_MSG);
             return;
         }
 
        String str = textView_answer.getText().toString();
 
-        if (str.equals(ERROR_MSG)) return;
 
         int cursorLocation = str.length();
         textInputEditText_question.setText(str);
@@ -255,68 +256,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String text = textInputEditText_question.getText().toString();
         int cursorLocation = textInputEditText_question.getSelectionStart() - 1;
         if (cursorLocation < 0 || text.equals(EMPTY_ANSWER)) return;
-//        textInputEditText_question.setText(text);
 
         removeCharAt(text, cursorLocation);
 
         text = textInputEditText_question.getText().toString();
-        if (isEquationValid(text)){
+        if (isEquationValid(text, true)){
             textView_answer.setText(solve(text));
         }
-
     }
 
     void showLiveAnswer(){
-        try {
-            textView_answer.setText(solve(textInputEditText_question.getText().toString()));
-        } catch (Exception e){
-            System.err.println("in update equ: "  + e);
-        }
+//        try {
+            if (isEquationValid(textInputEditText_question.getText().toString(), true)){
+                textView_answer.setText(solve(textInputEditText_question.getText().toString()));
+            } else {
+                textView_answer.setText(ERROR_MSG);
+            }
+//        } catch (Exception e){
+//            System.err.println("in update equ: "  + e);
+//        }
     }
 
 
 
-    void removeCharAt(String str, int index){
-        String s;
+    void removeCharAt(String equation, int cursorLocation){
 
-        if (str.length() == 1) {
-            index = 1;
-            s = EMPTY_ANSWER;
+        if (equation.length() == 1) {
+            cursorLocation = 1;
+            equation = EMPTY_ANSWER;
         } else {
-            s = str.substring(0, index) + str.substring(index + 1);
+            equation = equation.substring(0, cursorLocation) + equation.substring(cursorLocation + 1);
         }
 
-
-        textInputEditText_question.setText(s);
-        textInputEditText_question.setSelection(index);
+        textInputEditText_question.setText(equation);
+        textInputEditText_question.setSelection(cursorLocation);
     }
 
     
 
-    boolean isEquationValid(String str){
-        int  count_symbol = 0;
+    boolean isEquationValid(String str, boolean forLiveAnswer){
+        int  count_symbol = 0, count_number = 0;
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
-        System.out.println("282: " + str);
+        count_number = number.countTokens();
+        count_symbol = numberOfSymbols(symbol);
 
-        while (symbol.hasMoreTokens()){
-            String token = symbol.nextToken().toString();
+        symbol = new StringTokenizer(str, "1234567890.");
+        if (isSymbolAreNearEachOther(symbol)) return false;
 
-            if (token.length() > 1)  {
-                textView_answer.setText(ERROR_MSG);
-                return false;
-            }
-
-            for (int i = 0; i < token.length(); i++){
-                System.out.println("280: " + str);
-                count_symbol++;
-            }
-        }
-
-        System.out.printf("count: number: %s  | symbol: %s\n", number.countTokens(), count_symbol - 2);
-
-        System.out.printf("297: %s \n", str);
         try {
             String unwantedAnswers = divAndMult(str) + "";
             System.out.println("299: " + unwantedAnswers);
@@ -327,14 +315,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e){ }
 
 
+        if (isLeftMostNumberIsNegative(str)) {
+            count_symbol--;
+        }
 
-        if (str.charAt(0) == '-') count_symbol--;
+        if (forLiveAnswer) {
+            return hasMoreNumbersThanSymbols(count_number, count_symbol - 1);
+        }
 
-        if (!(number.countTokens() >= count_symbol))  textView_answer.setText(ERROR_MSG);
-
-        return number.countTokens() > count_symbol;
+        return hasMoreNumbersThanSymbols(count_number, count_symbol);
     }
 
+    boolean isLeftMostNumberIsNegative(String equation){
+        return equation.charAt(0) == '-';
+    }
+
+    int numberOfSymbols(StringTokenizer token){
+        int count_symbol = 0;
+
+        while (token.hasMoreTokens()) {
+            String symbols = token.nextToken();
+            for (int i = 0; i < symbols.length(); i++) {
+                count_symbol++;
+            }
+        }
+
+        return count_symbol;
+    }
+
+    boolean isSymbolAreNearEachOther(StringTokenizer token){
+        System.out.println("349: insymbols");
+        while (token.hasMoreTokens()){
+            String symbols = token.nextToken().toString();
+            System.out.println("349 - length: " + symbols.length());
+            if (symbols.length() > 1) {
+                System.out.println("349: YES");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    boolean hasMoreNumbersThanSymbols(int number, int symbol){
+        return number > symbol;
+    }
 
 
 
