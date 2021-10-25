@@ -327,12 +327,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String solve(String equation){
         String solution;
 
-        equation = "0" + equation;
+        equation = "0" + equation; // "0": to deal with negative number on the left most number of the equation
 
         if (noSymbolsInEquation(equation)) return EMPTY_ANSWER;
 
         solution = getRidOfDivAndMulti(equation);
-        solution = addAndSub(solution.toString()) + "";
+        solution = addAndSub(solution) + "";
         solution = removeDecimalPlacesIfNotNeeded(solution);
 
         if (isSpecialAnswer(divAndMulti(equation))) {
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView_answer.setText("");
 
-        return solution.toString();
+        return solution;
     }
 
     /******************************************************************************************
@@ -392,9 +392,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /******************************************************************************************
-     ********************************* other general methods **********************************
-     ******************************************************************************************/
+    /*****************************************************************************************
+    ********************************* other general methods **********************************
+    ******************************************************************************************/
 
     void removeCharAt(String equation, int cursorLocation){
 
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     boolean isEquationValid(String str, boolean forLiveAnswer){
-        int  count_symbol = 0, count_number = 0;
+        int  count_symbol, count_number;
         StringTokenizer number = new StringTokenizer(str, "*/+-");
         StringTokenizer symbol = new StringTokenizer(str, "1234567890.");
 
@@ -459,7 +459,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     boolean areSymbolsNearEachOther(StringTokenizer token){
         while (token.hasMoreTokens()){
-            String symbols = token.nextToken().toString();
+            String symbols = token.nextToken();
             if (symbols.length() > 1) {
                 return true;
             }
@@ -515,28 +515,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String getRidOfDivAndMulti(String equation){
-        StringTokenizer group, group_sym;
-        String solution = "";
+        StringTokenizer group = new StringTokenizer(equation, "-+");
+        StringTokenizer group_sym = new StringTokenizer(equation, "/*1234567890.");
 
-        group = new StringTokenizer(equation, "-+");
-        group_sym = new StringTokenizer(equation, "/*1234567890.");
-
-        solution = divAndMulti(group.nextToken()) + "";
+        StringBuilder solution = new StringBuilder(divAndMulti(group.nextToken()) + "");
 
         while (group.hasMoreTokens()) {
             String gro = group_sym.nextToken();
             if (gro.length() > 1) return ERROR_MSG;
-            if (gro.equals("+")) solution += "+";
-            if (gro.equals("-")) solution += "-";
+            if (gro.equals("+")) solution.append("+");
+            if (gro.equals("-")) solution.append("-");
             double answer = divAndMulti(group.nextToken());
 
             if (isSpecialAnswer(answer)) return ERROR_MSG;
 
-            solution += answer;
+            solution.append(answer);
         }
 
 
-        return solution;
+        return solution.toString();
     }
 
     String removeDecimalPlacesIfNotNeeded(String solution){
