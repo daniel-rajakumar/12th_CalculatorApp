@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void updateEquation(String text ){
+    void updateEquation(String text){
         if (text.equals("=")){ onClickEqualButton(); return; }
         if (text.equals("c")){ onClickClearButton(); return; }
 
@@ -299,6 +299,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void showLiveAnswer(){
         String equation = textInputEditText_question.getText().toString();
+        equation = equation.replaceAll(" ", "");
         if (isEquationValid(equation, true)){
             textView_answer.setText(solve(equation));
         } else {
