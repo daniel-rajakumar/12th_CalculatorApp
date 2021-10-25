@@ -1,6 +1,6 @@
 # Calculator App
 
-## Welcome the the greatest claculator every made! 
+## Welcome the the greatest claculator ever made! 
 
 ### features 
 * Theme toggle
